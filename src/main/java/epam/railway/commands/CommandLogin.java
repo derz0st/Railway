@@ -8,7 +8,8 @@ package epam.railway.commands;
 import epam.railway.entities.User;
 import epam.railway.manager.Config;
 import epam.railway.service.UserService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -34,8 +35,10 @@ public class CommandLogin implements ICommand{
     private static final String ERROR = "error";
     private static final String ADMIN_RIGHTS = "adminrights";
      
-    private static Logger log = Logger.getLogger(CommandLogin.class.getName());
-    
+    //private static Logger log = Logger.getLogger(CommandLogin.class.getName());
+
+    static final Logger rootLogger = LogManager.getRootLogger();
+    static final Logger commandLogger = LogManager.getLogger(CommandLogin.class);
     
    // static final Logger userLogger = LogManager.getLogger(User.class);
     
@@ -51,7 +54,8 @@ public class CommandLogin implements ICommand{
             
             
             user = UserService.findUser(email, password);
-            log.info("User login: id = " + user.getId() + ", email = " + user.getEmail());
+            commandLogger.info("User login: id = " + user.getId() + ", email = " + user.getEmail());
+            rootLogger.info("User login: id = " + user.getId() + ", email = " + user.getEmail());
             
             HttpSession session = request.getSession(true);
             session.setAttribute(USER_ID, user.getId());

@@ -14,6 +14,15 @@ a:link, a:visited, a:active {
 	color: #666666;
 }
 
+.errortextblock{
+	width: 400px;
+	margin: 60px auto;
+	text-align: center;
+	font-size: 13px;
+	font-weight: bolder;
+	color: #9c9c9c;
+}
+
 .ticketmenu{
 	margin-top: 5px;
 	margin-left: 15px;
@@ -198,7 +207,6 @@ a:link, a:visited, a:active {
 
 .footblock{
 	float: left;
-	margin-top: 40px;
 	width: 100%;
 	height: 70px;
 	text-align: center;
@@ -652,7 +660,8 @@ body {
 	position: relative;
 	max-width: 430px;
 	width: 100%;
-	margin: 0 auto 100px;
+	min-height: 640px;
+	margin: 0 auto 0px;
 }
 .container.active .card:first-child {
 	background: #f2f2f2;

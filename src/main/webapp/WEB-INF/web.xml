@@ -26,7 +26,7 @@
 
     <filter-mapping>
         <filter-name>UserPanelFilter</filter-name>
-        <servlet-name>Controller</servlet-name>
+        <url-pattern>/Controller</url-pattern>
     </filter-mapping>
 
     <listener>

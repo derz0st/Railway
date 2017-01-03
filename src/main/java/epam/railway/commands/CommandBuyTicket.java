@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author denis
  */
 public class CommandBuyTicket implements ICommand{
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommandBuyTicket.class.getName());
+    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommandBuyTicket.class.getName());
     private static final String TRAIN_ID = "trainid";
     private static final String DATE = "date";
     private static final String USER_ID = "userid";

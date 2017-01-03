@@ -8,7 +8,8 @@ package epam.railway.service;
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.entities.Ticket;
 import epam.railway.entities.comparators.TicketDateComparator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 public class TicketService {
 
     private static TicketService instance;
-    private static final Logger log = Logger.getLogger(TicketService.class.getName());
+    private static final Logger log = LogManager.getLogger(TicketService.class.getName());
 
     private TicketService(){}
 

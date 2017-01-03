@@ -8,16 +8,18 @@ package epam.railway.service;
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.entities.User;
 import epam.railway.manager.Message;
-import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.security.auth.login.LoginException;
-import org.apache.log4j.Logger;
+import java.util.List;
 
 /**
  *
  * @author denis
  */
 public class UserService {
-    private static final Logger log = Logger.getLogger(UserService.class.getName());
+    private static final Logger log = LogManager.getLogger(UserService.class.getName());
     
     public static User findUser(final String email, final String password) throws LoginException{
         

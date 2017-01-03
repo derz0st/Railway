@@ -3,7 +3,8 @@ package epam.railway.service;
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.entities.Station;
 import epam.railway.entities.TrainNeo;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.util.List;
 public class TrainSevice {
 
     private static TrainSevice instance;
-    private static final Logger log = Logger.getLogger(TrainSevice.class.getName());
+    private static final Logger log = LogManager.getLogger(TrainSevice.class.getName());
 
     private TrainSevice(){}
 

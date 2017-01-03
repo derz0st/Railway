@@ -21,6 +21,9 @@
     </c:otherwise>
 </c:choose>
 
+<c:if test="${empty tickets}">
+    <div class="errortextblock"> <fmt:message key="error_actual_tickets" /> </div>
+</c:if>
 
 <c:forEach var="ticket" items="${tickets}">
 

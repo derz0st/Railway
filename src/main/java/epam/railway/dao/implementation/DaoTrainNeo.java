@@ -34,7 +34,7 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
     private static final String FIND_ALL_TRAIN_NUMBERS = "MATCH ()-[d: GOES]->() RETURN DISTINCT d.trainnumber";
     
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DaoTrainNeo.class.getName());
+    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DaoTrainNeo.class.getName());
     
     private DaoTrainNeo(){}
     

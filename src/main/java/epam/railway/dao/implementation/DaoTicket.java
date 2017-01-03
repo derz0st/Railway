@@ -8,7 +8,8 @@ package epam.railway.dao.implementation;
 import epam.railway.dao.interfaces.DaoTicketInterface;
 import epam.railway.entities.Ticket;
 import epam.railway.manager.ConnectionPool;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.naming.NamingException;
 import java.sql.*;
@@ -22,7 +23,7 @@ import java.util.List;
 public class DaoTicket implements DaoTicketInterface{
     
     private static DaoTicket instance;
-    private static final Logger log = Logger.getLogger(DaoTicket.class.getName());
+    private static final Logger log = LogManager.getLogger(DaoTicket.class.getName());
     private static final String QUERY_ADD_TICKET =
             "INSERT INTO tiket_test (user_id, user_name, user_last_name, start_date_time, end_date_time, price," +
                     "train_number, departure_city, destination_city) VALUES (?,?,?,?,?,?,?,?,?)";

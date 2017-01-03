@@ -5,7 +5,11 @@
  */
 package epam.railway.filters;
 
+import epam.railway.entities.User;
+
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,9 +26,23 @@ public class UserPanelFilter implements Filter {
 
     @Override
     public void doFilter(final ServletRequest request, final ServletResponse response, FilterChain chain) throws java.io.IOException, javax.servlet.ServletException {
-        //HttpServletRequest httpRequest = (HttpServletRequest) request;
-        //HttpSession session = httpRequest.getSession(false);
-        //LangService.setUserPanelAttributes(session, httpRequest);
+
+        HttpServletRequest req = (HttpServletRequest) request;
+
+        HttpSession session = req.getSession(false);
+
+        if (request.getParameter("command").equals("settings")) {
+            try {
+                User user = (User) session.getAttribute("userentity");
+                System.out.println("В сессии сейчас: " + user.getLastname());
+
+            }catch (NullPointerException e){
+                System.out.println("В сессии nullPointer");
+                RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/sign-in.jsp");
+                dispatcher.forward(request, response);
+            }
+        }
+
         chain.doFilter(request, response);
     }
 

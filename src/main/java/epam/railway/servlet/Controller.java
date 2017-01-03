@@ -43,10 +43,12 @@ public class Controller extends HttpServlet {
             //request.setAttribute("messageError", Message.getInstance().getProperty(Message.SERVLET_EXECPTION));
             //log.error(e.getMessage());
             //page = Config.getInstance().getProperty(Config.ERROR);
+            System.out.println("Ошибка в сервлете");
         } catch (IOException e) {
             //request.setAttribute("messageError", Message.getInstance().getProperty(Message.IO_EXCEPTION));
             //log.error(e.getMessage());
             //page = Config.getInstance().getProperty(Config.ERROR);
+            System.out.println("Ошибка в сервлете");
         }
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
@@ -91,12 +93,4 @@ public class Controller extends HttpServlet {
         return "Servlet";
     }
 
-
-    public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        System.out.println("In sessionCreated(HttpSessionEvent) ");
-        HttpSession httpSession = httpSessionEvent.getSession();
-        System.out.println("Session Id :"+httpSession.getId() );
-        System.out.println("Exiting sessionCreated(HttpSessionEvent) ");
-        System.out.println();
-    }
 }
