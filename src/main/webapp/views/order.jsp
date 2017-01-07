@@ -11,13 +11,13 @@
 
 <c:choose>
     <c:when test="${sessionScope.language == 'ru'}">
-        <fmt:setBundle basename="langRu" />
+        <fmt:setBundle basename="locale/lang_RU" />
     </c:when>
     <c:when test="${sessionScope.language == 'en'}">
-        <fmt:setBundle basename="langEn" />
+        <fmt:setBundle basename="locale/lang_EN" />
     </c:when>
     <c:otherwise>
-        <fmt:setBundle basename="langEn" />
+        <fmt:setBundle basename="locale/lang_EN" />
     </c:otherwise>
 </c:choose>
 
@@ -50,18 +50,19 @@
         <div class="input-container">
             <input type="text" id="From" name="departurecity" value="<c:choose><c:when test="${not empty departurecity}">${departurecity}</c:when></c:choose>" required="required"/>
             <label for="From"><fmt:message key="from" /></label>
-            <div class="bar"></div>
+            <div class="bar">${departure_error}</div>
         </div>
         <div class="input-container">
             <input type="text" id="To" name="destinationcity" value="<c:choose><c:when test="${not empty destinationcity}">${destinationcity}</c:when></c:choose>" required="required"/>
             <label for="To"><fmt:message key="to" /></label>
-            <div class="bar"></div>
+            <div class="bar">${destination_error}</div>
         </div>
 
 
 
         <div class="datepicker-container">
             <input type="text" class="form-control" name="traveldate" value="${traveldate}" placeholder="<fmt:message key="travel_date" />" id="datetimepicker2">
+            <div class="date_error">${date_error}</div>
         </div>
 
 
@@ -72,7 +73,7 @@
     <center>
             <span>
                 <br>
-                ${error}
+
             </span>
     </center>
     <c:forEach var="train" items="${trains}">

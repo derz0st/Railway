@@ -37,6 +37,12 @@ public class TicketService {
         return true;
     }
 
+    public List<Ticket> getAllTicketsByUserId(Integer userId){
+        List<Ticket> userTickets = DaoFactory.getDaoTicket().findByUserid(userId, null);
+        Collections.sort(userTickets, new TicketDateComparator());
+        return userTickets;
+    }
+
     public List<Ticket> getActualTicketsByUserId(Integer userId){
         List<Ticket> userTickets = DaoFactory.getDaoTicket().findByUserid(userId, true);
         Collections.sort(userTickets, new TicketDateComparator());

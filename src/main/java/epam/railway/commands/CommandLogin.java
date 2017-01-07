@@ -7,6 +7,7 @@ package epam.railway.commands;
 
 import epam.railway.entities.User;
 import epam.railway.manager.Config;
+import epam.railway.regexp.RegExp;
 import epam.railway.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,35 +49,54 @@ public class CommandLogin implements ICommand{
         String page = null;
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
-        
-        User user;
-        try {
-            
-            
-            user = UserService.findUser(email, password);
-            commandLogger.info("User login: id = " + user.getId() + ", email = " + user.getEmail());
-            rootLogger.info("User login: id = " + user.getId() + ", email = " + user.getEmail());
-            
-            HttpSession session = request.getSession(true);
-            session.setAttribute(USER_ID, user.getId());
-            session.setAttribute("userentity", user);
-            session.setAttribute(LANGUAGE, ENGLISH);
-            
-            if(user.getAdminid() == 1){
-                session.setAttribute(ADMIN_RIGHTS, true);
+        request.setAttribute("entered_email", email);
+        request.setAttribute("entered_password", password);
+
+        page = "/views/sign-in.jsp";
+        if (email.isEmpty() || password.isEmpty()){
+            if(email.isEmpty()) {
+                request.setAttribute("emailerror", "• это обязательное для заполнения поле");
             }
-            
-            String lang = (String) session.getAttribute(LANGUAGE);
+            if(password.isEmpty()) {
+                request.setAttribute("passworderror", "• это обязательное для заполнения поле");
+            }
 
 
-            request.setAttribute(TRAINS, null);
-            page = Config.getInstance().getProperty(Config.ORDER);
-            
-        } catch (LoginException ex) {
-            request.setAttribute(ERROR, ex.getMessage());
-            page = Config.getInstance().getProperty(Config.ERROR);
+            page = "/views/sign-in.jsp";
+        } else if (RegExp.validateEmail(email)) {
+            User user;
+            try {
+
+
+                user = UserService.findUser(email, password);
+                commandLogger.info("User login: id = " + user.getId() + ", email = " + user.getEmail());
+                rootLogger.info("User login: id = " + user.getId() + ", email = " + user.getEmail());
+
+                HttpSession session = request.getSession(true);
+                session.setAttribute(USER_ID, user.getId());
+                session.setAttribute("userentity", user);
+                session.setAttribute(LANGUAGE, ENGLISH);
+
+                if (user.getAdminid() == 1) {
+                    session.setAttribute(ADMIN_RIGHTS, true);
+                }
+
+                String lang = (String) session.getAttribute(LANGUAGE);
+
+
+                request.setAttribute(TRAINS, null);
+                page = Config.getInstance().getProperty(Config.ORDER);
+
+            } catch (LoginException ex) {
+                request.setAttribute(ERROR, ex.getMessage());
+                page = Config.getInstance().getProperty(Config.ERROR);
+            }
+        } else {
+            request.setAttribute("emailerror", "• неккоректно введенный e-mail");
+            page = "/views/sign-in.jsp";
+
         }
-       
+
         return page;
     }
 }

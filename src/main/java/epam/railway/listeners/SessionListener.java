@@ -1,4 +1,4 @@
-package epam.railway.manager;
+package epam.railway.listeners;
 
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.entities.Ticket;
@@ -20,8 +20,10 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent arg0) {
+
         HttpSession session = arg0.getSession();
         Ticket ticket = (Ticket) session.getAttribute("ticketInShoppingCart");
+
         if(ticket != null){
             Timestamp timestamp = ticket.getStartDateTime();
             Calendar cropTime = Calendar.getInstance();

@@ -16,7 +16,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Sign In</title>
+    <title>Sign In in JSP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
@@ -35,14 +35,14 @@
         <h1 class="title">Login</h1>
         <form name="loginForm" method="POST" action="Controller?command=login">
           <div class="input-container">
-            <input type="text" id="Email" name="email" required="required"/>
+            <input type="text" id="Email" name="email" value="${entered_email}" required="required"/>
             <label for="Email">Email</label>
-            <div class="bar"></div>
+            <div class="bar">${emailerror}</div>
           </div>
           <div class="input-container">
-            <input type="password" id="Password" name="password" required="required"/>
+            <input type="password" id="Password" name="password" value="${entered_password}" required="required"/>
             <label for="Password">Password</label>
-            <div class="bar"></div>
+            <div class="bar">${passworderror}</div>
           </div>
           <div class="button-container">
             <button><span>Go</span></button>

@@ -1,4 +1,4 @@
-package epam.railway.manager;
+package epam.railway.listeners;
 
 import epam.railway.dao.daofactory.DaoFactory;
 
@@ -18,14 +18,16 @@ public class UpdateTicketTimer extends TimerTask {
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND, 0);
-        today.roll(Calendar.DAY_OF_MONTH, 30);
+        today.roll(Calendar.DAY_OF_MONTH, 10);
 
         Date future = today.getTime();
+        Timestamp timestamp = new Timestamp(future.getTime());
+        timestamp.setNanos(0);
 
         List<Integer> allTrainNumbers = DaoFactory.getDaoTrainNeo().getAllTrainNumbers();
 
         for (Integer index: allTrainNumbers){
-            DaoFactory.getDaoTrainTicketsOnDate().addTrainOnDate(index, new Timestamp(future.getTime()), 15);
+            DaoFactory.getDaoTrainTicketsOnDate().addTrainOnDate(index, timestamp, 10);
         }
 
     }

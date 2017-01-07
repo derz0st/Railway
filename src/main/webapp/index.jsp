@@ -1,7 +1,9 @@
-<%-- 
-    Document   : index
-    Created on : 28.10.2014, 0:49:51
-    Author     : denis
+<%--
+  Created by IntelliJ IDEA.
+  User: denis
+  Date: 04.01.17
+  Time: 13:59
+  To change this template use File | Settings | File Templates.
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:forward page="sign-in.jsp"/>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:forward page="views/sign-in.jsp"/>

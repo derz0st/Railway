@@ -1,4 +1,4 @@
-package epam.railway.manager;
+package epam.railway.listeners;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -9,9 +9,10 @@ import java.util.Timer;
 /**
  * Created by denis on 02.01.17.
  */
-public class TicketsUpdateListener implements ServletContextListener {
+public class UpdateTicketListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent event) {
+
         Timer timer = new Timer(true);
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
@@ -21,11 +22,13 @@ public class TicketsUpdateListener implements ServletContextListener {
 
         Date tomorrow = today.getTime();
         System.out.println("Update Ticket будет запущен: " + tomorrow);
+
+        //timer.scheduleAtFixedRate(new UpdateTicketTimer(), 0, 25000);
         timer.scheduleAtFixedRate(new UpdateTicketTimer(), tomorrow, 86400000);
+
     }
 
     public void contextDestroyed(ServletContextEvent event) {
-        // здесь останавливаем потоки, Executor-ы, освобождаем ресурсы.
     }
 
 }

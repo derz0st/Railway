@@ -23,6 +23,7 @@
                 
 
                 <c:forEach var="user" items="${users}">
+                <a href="Controller?command=customertickets&userid=${user.id}">
                 <div class="usualuser">
                     <div class="usericon"></div>
                     <div class="traintopitemname"> 
@@ -36,8 +37,9 @@
 
                     <a href="Controller?command=deleteuser&userid=${user.id}" class="deleteticket"></a>
                     <div class="mainitem">
-                    </div>	
+                    </div>
                 </div>
+                </a>
                     
                     
                 </c:forEach>

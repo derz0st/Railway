@@ -27,6 +27,8 @@ public class DaoTicket implements DaoTicketInterface{
     private static final String QUERY_ADD_TICKET =
             "INSERT INTO tiket_test (user_id, user_name, user_last_name, start_date_time, end_date_time, price," +
                     "train_number, departure_city, destination_city) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String QUERY_SELECT_ALL_TICKETS_BY_USER_ID =
+            "SELECT * FROM tiket_test WHERE user_id = ?";
     private static final String QUERY_SELECT_ACTUAL_TICKETS_BY_USER_ID =
             "SELECT * FROM tiket_test WHERE user_id = ? AND start_date_time > ?";
     private static final String QUERY_SELECT_ARCHIVE_TICKETS_BY_USER_ID =
@@ -71,39 +73,15 @@ public class DaoTicket implements DaoTicketInterface{
             System.out.println("Ошибка" + ex.getMessage());
         }
     }
-    
-/*
-    @Override
-    public Ticket findById(Integer id) {
-        Ticket ticket = null;       
-        
-        try (Connection connection = ConnectionPool.createConnection(); 
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ticket WHERE id = ?")) {
-            
-            preparedStatement.setString(1, id.toString());
-            
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                ticket = new Ticket();
-                
-                if(resultSet.next()){
-                    ticket.setId(resultSet.getInt("id"));
-                    ticket.setUserid(resultSet.getInt("userid"));
-                    ticket.setTrainid(resultSet.getInt("trainid"));
-                    ticket.setDate(new java.util.Date(resultSet.getTimestamp("date").getTime()));
-                }
-            }
-            
-        } catch (NamingException | SQLException ex) {
-            log.error(ex.getMessage());
-        }
-        return ticket;
-    }*/
 
 
     public List<Ticket> findByUserid(Integer userId, Boolean actual) {
+
         List<Ticket> list = new ArrayList();
         String query;
-        if (actual) {
+        if (actual == null) {
+            query = QUERY_SELECT_ALL_TICKETS_BY_USER_ID;
+        } else if (actual) {
             query = QUERY_SELECT_ACTUAL_TICKETS_BY_USER_ID;
         } else {
             query = QUERY_SELECT_ARCHIVE_TICKETS_BY_USER_ID;
@@ -112,10 +90,12 @@ public class DaoTicket implements DaoTicketInterface{
         try (Connection connection = ConnectionPool.createConnection(); 
             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            Timestamp now = new Timestamp(System.currentTimeMillis());
-
             preparedStatement.setString(1, userId.toString());
-            preparedStatement.setTimestamp(2, now);
+
+            if(actual != null) {
+                Timestamp now = new Timestamp(System.currentTimeMillis());
+                preparedStatement.setTimestamp(2, now);
+            }
                 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 Ticket ticket;
@@ -140,51 +120,7 @@ public class DaoTicket implements DaoTicketInterface{
         }
         return list;
     }
-    /*
-    @Override
-    public void deleteById(Integer id) {
-        
-        try (Connection connection = ConnectionPool.createConnection(); 
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM ticket WHERE id=?")) {
-                
-            preparedStatement.setString(1, id.toString());
-            preparedStatement.execute();
-                
-        } catch (NamingException | SQLException ex) {
-            log.error(ex.getMessage());
-        }
-        
-    }
 
-    @Override
-    public Integer getBusySeatsOnDate(Integer trainId, String dateString) {
-        Integer busySeats = null;       
-        
-        try (Connection connection = ConnectionPool.createConnection(); 
-            PreparedStatement preparedStatement = 
-            connection.prepareStatement("SELECT COUNT(*) FROM ticket WHERE trainid = ? and date = ?")) {
-            
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatter.parse(dateString);
-            
-            preparedStatement.setString(1, trainId.toString());
-            preparedStatement.setString(2, formatter.format(date));
-            
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                
-                if(resultSet.next()){
-                    busySeats = resultSet.getInt(1);
-                }
-            }
-            
-        } catch (NamingException | SQLException ex) {
-            log.error(ex.getMessage());
-        } catch (ParseException ex) {
-            java.util.logging.Logger.getLogger(DaoTicket.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return busySeats;
-    }*/
-    
     
 
 }

@@ -14,6 +14,10 @@ a:link, a:visited, a:active {
 	color: #666666;
 }
 
+.error{
+	margin-top: 60px;
+}
+
 .errortextblock{
 	width: 400px;
 	margin: 60px auto;
@@ -138,7 +142,7 @@ a:link, a:visited, a:active {
 	width: 100%;
 	padding-left: 30px;
 	padding-right: 30px;
-	padding-bottom: 20px;
+	padding-bottom: 0px;
 	box-sizing: border-box;
 }
 
@@ -802,11 +806,15 @@ body {
 }
 .card .input-container .bar {
 	position: absolute;
+
 	left: 0;
 	bottom: 0;
 	background: #757575;
+	line-height: 20px;
+	color: #b70808;
 	width: 100%;
 	height: 1px;
+
 }
 .card .input-container .bar:before, .card .input-container .bar:after {
 	content: '';
@@ -1045,9 +1053,20 @@ body {
 	left: 0;
 	bottom: 0;
 	background: #757575;
+	line-height: 20px;
+	color: #b70808;
+	font-size: 11px;
 	width: 100%;
 	height: 1px;
 }
+
+.date_error{
+	min-height: 20px;
+	line-height: 20px;
+	color: #b70808;
+	font-size: 11px;
+}
+
 .orderform .input-container .bar:before, .orderform .input-container .bar:after {
 	content: '';
 	position: absolute;

@@ -11,13 +11,13 @@
 
 <c:choose>
     <c:when test="${sessionScope.language == 'ru'}">
-        <fmt:setBundle basename="langRu" />
+        <fmt:setBundle basename="locale/lang_RU" />
     </c:when>
     <c:when test="${sessionScope.language == 'en'}">
-        <fmt:setBundle basename="langEn" />
+        <fmt:setBundle basename="locale/lang_EN" />
     </c:when>
     <c:otherwise>
-        <fmt:setBundle basename="langEn" />
+        <fmt:setBundle basename="locale/lang_EN" />
     </c:otherwise>
 </c:choose>
 
