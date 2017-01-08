@@ -6,6 +6,19 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/footerTag.tld" prefix="m"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:choose>
+    <c:when test="${sessionScope.language == 'ru'}">
+        <fmt:setBundle basename="locale/lang_RU" />
+    </c:when>
+    <c:when test="${sessionScope.language == 'en'}">
+        <fmt:setBundle basename="locale/lang_EN" />
+    </c:when>
+    <c:otherwise>
+        <fmt:setBundle basename="locale/lang_EN" />
+    </c:otherwise>
+</c:choose>
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,11 +46,19 @@
                     <div class="traintopemail"> 
                             <div class="travelway"> E-mail </div>
                             ${user.email}
-                    </div>	
-
-                    <a href="Controller?command=deleteuser&userid=${user.id}" class="deleteticket"></a>
-                    <div class="mainitem">
                     </div>
+                    <a href="Controller?command=blockuser&userid=${user.id}">
+                        <c:choose>
+                            <c:when test="${user.isBlocked == 1}">
+                                <div class="blocked_block" id="unlock"></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="blocked_block"></div>
+                            </c:otherwise>
+                        </c:choose>
+
+                    </a>
+
                 </div>
                 </a>
                     

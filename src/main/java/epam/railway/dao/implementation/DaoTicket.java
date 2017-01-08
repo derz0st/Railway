@@ -33,6 +33,8 @@ public class DaoTicket implements DaoTicketInterface{
             "SELECT * FROM tiket_test WHERE user_id = ? AND start_date_time > ?";
     private static final String QUERY_SELECT_ARCHIVE_TICKETS_BY_USER_ID =
             "SELECT * FROM tiket_test WHERE user_id = ? AND start_date_time < ?";
+    private static final String QUERY_DELETE_TICKET_BY_TICKET_ID =
+            "DELETE FROM tiket_test WHERE id = ?";
     
     private DaoTicket(){}
     
@@ -119,6 +121,28 @@ public class DaoTicket implements DaoTicketInterface{
             System.out.println("Ошибка");
         }
         return list;
+    }
+
+    public void deleteByTicketId(Integer ticketId){
+        try (Connection connection = ConnectionPool.createConnection()) {
+            PreparedStatement preparedStatement = null;
+
+            try {
+
+                preparedStatement = connection.prepareStatement(QUERY_DELETE_TICKET_BY_TICKET_ID);
+                preparedStatement.setInt(1, ticketId);
+
+                preparedStatement.execute();
+
+            } finally {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            }
+
+        } catch (NamingException | SQLException ex) {
+            System.out.println("Ошибка" + ex.getMessage());
+        }
     }
 
     

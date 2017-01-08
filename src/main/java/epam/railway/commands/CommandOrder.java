@@ -36,7 +36,7 @@ public class CommandOrder implements ICommand{
             DATE_ERROR = "date_error",
             ERROR_EMPTY = "empty field",
             DATE_FORMAT_TEMPLATE = "dd-MM-yyyy",
-            ERROR_INCORRECT_FORMAT = "Enter date in next format: dd-MM-yyyy";
+            ERROR_INCORRECT_FORMAT = "Enter date in next format: dd-MM-yyyy HH:mm";
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {

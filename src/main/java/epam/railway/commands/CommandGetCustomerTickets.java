@@ -35,6 +35,7 @@ public class CommandGetCustomerTickets implements ICommand{
 
         //request.setAttribute("status", status);
         request.setAttribute(TICKETS, tickets);
+        request.setAttribute(USER_ID, userId);
         page = Config.getInstance().getProperty(Config.CUSTOMER_TICKETS);
         return page;
     }

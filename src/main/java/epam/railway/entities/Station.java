@@ -5,7 +5,7 @@
  */
 package epam.railway.entities;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -16,8 +16,8 @@ public class Station {
     private Integer id;
     private String name;
     private Integer trainNumber;
-    private Date arrivalTime;
-    private Date departureTime;
+    private Timestamp arrivalTime;
+    private Timestamp departureTime;
     private Double priceToNext;
 
     public Integer getId() {
@@ -36,19 +36,19 @@ public class Station {
         this.name = name;
     }
 
-    public Date getArrivalTime() {
+    public Timestamp getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(Date arrivalTime) {
+    public void setArrivalTime(Timestamp arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public Date getDepartureTime() {
+    public Timestamp getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Date departureTime) {
+    public void setDepartureTime(Timestamp departureTime) {
         this.departureTime = departureTime;
     }
 

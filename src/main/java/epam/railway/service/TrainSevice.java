@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -39,6 +39,7 @@ public class TrainSevice {
             stationList = DaoFactory.getDaoStation().findByTrainNumber(train.getNumber());
             train.setStations(stationList);
 
+
             for(int i = 0; i < stationList.size(); i++){
                 if(stationList.get(i).getName().equals(departureCity)){
                     departureSt = i;
@@ -51,11 +52,14 @@ public class TrainSevice {
             train.setDepartureCity(stationList.get(0).getName());
             train.setArrivalTime(stationList.get(destinationSt).getArrivalTime());
             train.setArrivalCity(stationList.get(stationList.size()-1).getName());
-            train.setTravelTime(new Date(train.getArrivalTime().getTime() - train.getDepartureTime().getTime() - 10800000));
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(train.getArrivalTime().getTime() - train.getDepartureTime().getTime() - 97200000);
+            train.setTravelTime(calendar);
 
             Double price = 0.0;
 
-            for(int i = departureSt; i <= destinationSt; i++){
+            for(int i = departureSt; i <= destinationSt - 1; i++){
                 price += stationList.get(i).getPriceToNext();
             }
 
@@ -88,7 +92,9 @@ public class TrainSevice {
         train.setDepartureCity(stationList.get(0).getName());
         train.setArrivalTime(stationList.get(destinationSt).getArrivalTime());
         train.setArrivalCity(stationList.get(stationList.size()-1).getName());
-        train.setTravelTime(new Date(train.getArrivalTime().getTime() - train.getDepartureTime().getTime() - 10800000));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(train.getArrivalTime().getTime() - train.getDepartureTime().getTime() - 97200000);
+        train.setTravelTime(calendar);
 
         Double price = 0.0;
 

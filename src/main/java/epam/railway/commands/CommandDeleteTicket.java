@@ -5,12 +5,11 @@
  */
 package epam.railway.commands;
 
-import epam.railway.manager.Config;
+import epam.railway.service.TicketService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -26,15 +25,14 @@ public class CommandDeleteTicket implements ICommand{
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
         String page = null;
         Integer ticketId = Integer.parseInt(request.getParameter(TICKET_ID));
-        //TicketService.deleteTicket(ticketId);
-        
-        HttpSession session = request.getSession(false);
-        
-        Integer userId = (Integer)session.getAttribute(USER_ID);
+        TicketService.deleteTicket(ticketId);
+        request.setAttribute("userid", Integer.valueOf(request.getParameter("userid")));
+
         //List<Ticket> tickets = DaoFactory.getDaoTicket().findByUserid(userId);
         
         //request.setAttribute(TICKETS, tickets);
-        page = Config.getInstance().getProperty(Config.USER_TICKETS);
+        //page = Config.getInstance().getProperty(Config.USER_TICKETS);
+        page = new CommandGetCustomerTickets().execute(request, responce);
         return page;
     }
     

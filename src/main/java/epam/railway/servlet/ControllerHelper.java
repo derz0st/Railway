@@ -29,7 +29,7 @@ public class ControllerHelper {
         commands.put("logout", new CommandLogout());
         commands.put("administration", new CommandNotAdminUsers());
         commands.put("deleteticket", new CommandDeleteTicket());
-        commands.put("deleteuser", new CommandDeleteUser());
+        commands.put("blockuser", new CommandBlockUser());
         commands.put("settings", new CommandSettings());
         commands.put("settingssave", new CommandSettingsSave());
         commands.put("ordertest", new CommandOrderTest());

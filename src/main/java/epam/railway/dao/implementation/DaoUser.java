@@ -56,6 +56,7 @@ public class DaoUser implements DaoUserInterface {
                     user.setFirstname(resultSet.getString("firstname"));
                     user.setLastname(resultSet.getString("lastname"));
                     user.setEmail(resultSet.getString("email"));
+                    user.setIsBlocked(resultSet.getInt("is_blocked"));
                     user.setPassword(resultSet.getString("password"));
                     return user;
                 }
@@ -84,6 +85,7 @@ public class DaoUser implements DaoUserInterface {
                     user.setLastname(resultSet.getString("lastname"));
                     user.setEmail(resultSet.getString("email"));
                     user.setPassword(resultSet.getString("password"));
+                    user.setIsBlocked(resultSet.getInt("is_blocked"));
                     return user;
                 }
             }
@@ -126,6 +128,7 @@ public class DaoUser implements DaoUserInterface {
                 user.setLastname(resultSet.getString("lastname"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
+                user.setIsBlocked(resultSet.getInt("is_blocked"));
                 list.add(user);
             }
                 
@@ -145,6 +148,41 @@ public class DaoUser implements DaoUserInterface {
             preparedStatement.execute();
             
         } catch (NamingException | SQLException ex) {
+            log.error(ex.getMessage());
+        }
+    }
+
+
+    public void blockById(Integer id) {
+
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET "
+                     + "is_blocked = 1 "
+                     + "WHERE "
+                     + "id = ?")) {
+
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+
+        } catch (NamingException | SQLException ex) {
+            System.out.println("Error - " + ex.getMessage());
+            log.error(ex.getMessage());
+        }
+    }
+
+    public void unblockById(Integer id) {
+
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET "
+                     + "is_blocked = 0 "
+                     + "WHERE "
+                     + "id = ?")) {
+
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+
+        } catch (NamingException | SQLException ex) {
+            System.out.println("Error - " + ex.getMessage());
             log.error(ex.getMessage());
         }
     }

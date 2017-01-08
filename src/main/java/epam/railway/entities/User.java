@@ -5,11 +5,11 @@
  */
 package epam.railway.entities;
 
-import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -30,6 +30,7 @@ public class User implements Serializable {
     private String email;
     @Column(name = "password")
     private String password;
+    private Integer isBlocked;
 
     public Integer getId() {
         return id;
@@ -77,6 +78,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(Integer isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
     @Override

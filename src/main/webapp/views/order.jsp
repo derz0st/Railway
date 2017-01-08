@@ -5,6 +5,7 @@
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/footerTag.tld" prefix="m"%>
+<%@ taglib uri="/WEB-INF/timeTag.tld" prefix="calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -73,7 +74,7 @@
     <center>
             <span>
                 <br>
-
+                ${error}
             </span>
     </center>
     <c:forEach var="train" items="${trains}">
@@ -107,7 +108,7 @@
                     </div>
                     <div class="itemj">
                         <h4> <fmt:message key="travel_time" /> </h4>
-                        <fmt:formatDate pattern="HH:mm" value="${train.travelTime}" />
+                        <calendar:timetag date="${train.travelTime}" />
                     </div>
                     <div class="itemj">
                         <h4> <fmt:message key="ticket_price" /> </h4>
@@ -120,7 +121,7 @@
                     <div class="travelplan"><fmt:message key="route_of_the_train" /> </div>
                     <c:forEach var="station" end="0" items="${train.stations}">
                         <div class="stationitem">
-                            <div class="stationtime"> <fmt:formatDate pattern="HH:mm" value="${station.arrivalTime}" /> </div> <div class="station-round"></div>
+                            <div class="stationtime">  </div> <div class="station-round"></div>
                             <div class="stationtime"> <fmt:formatDate pattern="HH:mm" value="${station.departureTime}" /> </div>
                             <c:choose>
                                 <c:when test="${station.name == departurecity}">
@@ -175,7 +176,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker2').datetimepicker({language: 'ru', format: 'DD-MM-YYYY', startDate: '28/12/2016', endDate: '29/12/2016'});
+        $('#datetimepicker2').datetimepicker({language: 'ru', format: 'DD-MM-YYYY hh:mm', startDate: '28/12/2016', endDate: '29/12/2016'});
     });
 </script>
 

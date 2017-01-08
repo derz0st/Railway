@@ -73,9 +73,9 @@ public class TicketService {
 //
 //    }
 //
-//    public static void deleteTicket(Integer ticketId) {
-//        DaoFactory.getDaoTicket().deleteById(ticketId);
-//        log.info("Remove ticket: ticketId = " + ticketId);
-//    }
+    public static void deleteTicket(Integer ticketId) {
+        DaoFactory.getDaoTicket().deleteByTicketId(ticketId);
+        log.info("Remove ticket: ticketId = " + ticketId);
+    }
     
 }

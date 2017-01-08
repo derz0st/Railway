@@ -18,7 +18,7 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-<!--
+
     <filter>
         <filter-name>UserPanelFilter</filter-name>
         <filter-class>epam.railway.filters.UserPanelFilter</filter-class>
@@ -28,7 +28,7 @@
         <filter-name>UserPanelFilter</filter-name>
         <url-pattern>/Controller</url-pattern>
     </filter-mapping>
-    -->
+
 
     <listener>
         <listener-class>epam.railway.listeners.SessionListener</listener-class>

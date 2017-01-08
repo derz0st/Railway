@@ -5,11 +5,10 @@
  */
 package epam.railway.jstl;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
+import java.io.IOException;
+import java.util.Calendar;
 
 /**
  *
@@ -18,23 +17,29 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class TimeTag extends TagSupport{
     private static final long serialVersionUID = 2L;
 	
-    private Date date;
-    private String format;
+    private Calendar calendar;
     
-    
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(Calendar calendar) {
+        this.calendar = calendar;
     }
-    
-    public void setFormat(String format) {
-        this.format = format;
-    }
+
     
     @Override
     public int doStartTag() throws JspException {
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-            String time = simpleDateFormat.format(date);
+
+            Integer days;
+            String time;
+            if (calendar.get(Calendar.DAY_OF_YEAR) == 365) {
+                time = calendar.get(Calendar.HOUR_OF_DAY) + "h" + calendar.get(Calendar.MINUTE) + "m";
+            } else {
+                time = calendar.get(Calendar.DAY_OF_YEAR) + "d"
+                        + calendar.get(Calendar.HOUR_OF_DAY) + "h"
+                        + calendar.get(Calendar.MINUTE) + "m";
+            }
+
+
+
             pageContext.getOut().print(time);
         } catch(IOException ioException) {
             throw new JspException("Error: " + ioException.getMessage());

@@ -5,7 +5,8 @@
  */
 package epam.railway.entities;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,9 +20,9 @@ public class TrainNeo {
     private Integer number;
     private String departureCity;
     private String arrivalCity;
-    private Date departureTime;
-    private Date arrivalTime;
-    private Date travelTime;
+    private Timestamp departureTime;
+    private Timestamp arrivalTime;
+    private Calendar travelTime;
     private Double price;
     private TrainTicketsOnDate trainTicketsOnDate;
     private List<Station> stations;
@@ -42,27 +43,27 @@ public class TrainNeo {
         this.number = number;
     }
 
-    public Date getDepartureTime() {
+    public Timestamp getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Date departureTime) {
+    public void setDepartureTime(Timestamp departureTime) {
         this.departureTime = departureTime;
     }
 
-    public Date getArrivalTime() {
+    public Timestamp getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(Date arrivalTime) {
+    public void setArrivalTime(Timestamp arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public Date getTravelTime() {
+    public Calendar getTravelTime() {
         return travelTime;
     }
 
-    public void setTravelTime(Date travelTime) {
+    public void setTravelTime(Calendar travelTime) {
         this.travelTime = travelTime;
     }
 

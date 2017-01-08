@@ -11,12 +11,6 @@
 		<body-content>empty</body-content>
 		<info>footer tag displayes Footer block on the web page</info>
                 <attribute>
-                    <name>format</name>
-                    <required>true</required>
-                    <description>Provide a format template</description>
-                    <rtexprvalue>false</rtexprvalue>
-                </attribute>
-                <attribute>
                     <name>date</name>
                     <required>true</required>
                     <description>Provide a date</description>

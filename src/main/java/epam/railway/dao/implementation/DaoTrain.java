@@ -12,14 +12,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -61,9 +58,14 @@ public class DaoTrain implements DaoTrainInterface{
                     train.setId(resultSet.getInt("id"));
                     train.setDeparturecity(resultSet.getString("departurecity"));
                     train.setDestinationcity(resultSet.getString("destinationcity"));
-                    train.setDeparturetime(formatter.parse(resultSet.getString("departuretime")));
-                    train.setArrivaltime(formatter.parse(resultSet.getString("arrivaltime")));
-                    train.setTraveltime(new Date(train.getArrivaltime().getTime() - train.getDeparturetime().getTime() - 10800000));
+                    train.setDeparturetime(new Timestamp(formatter.parse(resultSet.getString("departuretime")).getTime()));
+                    train.setArrivaltime(new Timestamp(formatter.parse(resultSet.getString("arrivaltime")).getTime()));
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(train.getArrivaltime().getTime() - train.getDeparturetime().getTime());
+
+                    //train.setTraveltime(new Timestamp(train.getArrivaltime().getTime() - train.getDeparturetime().getTime() - 10800000));
+                    train.setTraveltime(calendar);
                     train.setPrice(resultSet.getDouble("price"));
                     train.setTotalseats(resultSet.getInt("totalseats"));
                     //train.setFreeseats(train.getTotalseats() - DaoFactory.getDaoTicket().getBusySeatsOnDate(train.getId(), date));
@@ -94,9 +96,13 @@ public class DaoTrain implements DaoTrainInterface{
                     train.setId(resultSet.getInt("id"));
                     train.setDeparturecity(resultSet.getString("departurecity"));
                     train.setDestinationcity(resultSet.getString("destinationcity"));
-                    train.setDeparturetime(formatter.parse(resultSet.getString("departuretime")));
-                    train.setArrivaltime(formatter.parse(resultSet.getString("arrivaltime")));
-                    train.setTraveltime(new Date(train.getArrivaltime().getTime() - train.getDeparturetime().getTime() - 10800000));
+                    train.setDeparturetime(new Timestamp(formatter.parse(resultSet.getString("departuretime")).getTime()));
+                    train.setArrivaltime(new Timestamp(formatter.parse(resultSet.getString("arrivaltime")).getTime()));
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(train.getArrivaltime().getTime() - train.getDeparturetime().getTime());
+
+                    //train.setTraveltime(new Timestamp(train.getArrivaltime().getTime() - train.getDeparturetime().getTime() - 10800000));
+                    train.setTraveltime(calendar);
                     train.setPrice(resultSet.getDouble("price"));
                 }
             } 

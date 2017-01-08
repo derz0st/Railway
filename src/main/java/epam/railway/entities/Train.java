@@ -5,11 +5,12 @@
  */
 package epam.railway.entities;
 
-import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Objects;
 
 /**
  *
@@ -25,9 +26,9 @@ public class Train {
     @Column(name = "destinationcity")
     private String destinationcity;
     @Column(name = "departuretime")
-    private Date departuretime;
+    private Timestamp departuretime;
     @Column(name = "arrivaltime")
-    private Date arrivaltime;
+    private Timestamp arrivaltime;
     @Column(name = "price")
     private Double price;
     @Column(name = "totalseats")
@@ -35,7 +36,7 @@ public class Train {
     @Column(name = "freeseats")
     private Integer freeseats;
     
-    private Date traveltime;
+    private Calendar traveltime;
 
     
     public Integer getId() {
@@ -62,19 +63,19 @@ public class Train {
         this.destinationcity = destinationcity;
     }
 
-    public Date getDeparturetime() {
+    public Timestamp getDeparturetime() {
         return departuretime;
     }
 
-    public void setDeparturetime(Date departuretime) {
+    public void setDeparturetime(Timestamp departuretime) {
         this.departuretime = departuretime;
     }
 
-    public Date getArrivaltime() {
+    public Timestamp getArrivaltime() {
         return arrivaltime;
     }
 
-    public void setArrivaltime(Date arrivaltime) {
+    public void setArrivaltime(Timestamp arrivaltime) {
         this.arrivaltime = arrivaltime;
     }
 
@@ -86,11 +87,11 @@ public class Train {
         this.price = price;
     }
     
-    public Date getTraveltime() {
+    public Calendar getTraveltime() {
         return traveltime;
     }
 
-    public void setTraveltime(Date traveltime) {
+    public void setTraveltime(Calendar traveltime) {
         this.traveltime = traveltime;
     }
     
