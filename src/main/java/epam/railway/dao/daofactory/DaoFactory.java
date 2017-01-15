@@ -16,10 +16,6 @@ public class DaoFactory {
     public static DaoUser getDaoUser(){
         return DaoUser.getInstance();
     }
-    
-    public static DaoTrain getDaoTrain(){
-        return DaoTrain.getInstance();
-    }
 
     public static DaoStation getDaoStation(){
         return DaoStation.getInstance();

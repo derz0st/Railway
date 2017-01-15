@@ -25,6 +25,7 @@ public class Config {
     public static final String SETTINGS = "SETTINGS";
     public static final String SHOW_TRAIN_DETAIL = "SHOW_TRAIN_DETAIL";
     public static final String CUSTOMER_TICKETS = "customer_tickets";
+    public static final String RETURN_TICKETS = "return_tickets";
 
     private Config(){}
     

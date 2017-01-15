@@ -5,7 +5,6 @@
  */
 package epam.railway.dao.interfaces;
 
-import epam.railway.entities.Train;
 import java.util.List;
 
 /**
@@ -14,5 +13,5 @@ import java.util.List;
  */
 public interface DaoTrainInterface {
     List findByDeparturecityAndDestinationcity(String departureCity, String destinationCity, String date);
-    Train findById(Integer id);
+    //Train findById(Integer id);
 }

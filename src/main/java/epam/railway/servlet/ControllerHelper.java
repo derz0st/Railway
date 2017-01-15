@@ -35,6 +35,9 @@ public class ControllerHelper {
         commands.put("ordertest", new CommandOrderTest());
         commands.put("shoppingcart", new CommandShoppingCart());
         commands.put("customertickets", new CommandGetCustomerTickets());
+        commands.put("returnticket", new CommandReturnTicket());
+        commands.put("ticketsonreturn", new CommandGetReturnTickets());
+        commands.put("acceptreturn", new CommandAcceptReturn());
     }
     
     

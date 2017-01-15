@@ -7,7 +7,7 @@ package epam.railway.dao.implementation;
 
 import epam.railway.dao.interfaces.DaoUserInterface;
 import epam.railway.entities.User;
-import epam.railway.manager.ConnectionPool;
+import epam.railway.manager.connectionpool.mysql.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +26,7 @@ import java.util.List;
 public class DaoUser implements DaoUserInterface {
 
     private static DaoUser instance;
-    private static final Logger log = LogManager.getLogger(DaoTrain.class.getName());
+    private static final Logger log = LogManager.getLogger(DaoUser.class.getName());
     
     private DaoUser(){}
     
@@ -39,11 +39,11 @@ public class DaoUser implements DaoUserInterface {
     
     @Override
     public User findByEmailAndPassword(String email, String password) {
-        User user = null;       
-        
+        User user = null;
+
         try (Connection connection = ConnectionPool.createConnection(); 
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?")) {
-                
+
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             
@@ -63,6 +63,7 @@ public class DaoUser implements DaoUserInterface {
                     
             }
         } catch (NamingException | SQLException ex) {
+            System.out.println("какич");
             log.error(ex.getMessage());
         }
         return user;

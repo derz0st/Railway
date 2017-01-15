@@ -28,17 +28,25 @@
 <div class="usermenu">
 
     <c:choose>
-        <c:when test="${not empty sessionScope.ticketInShoppingCart}">
-            <a href="Controller?command=usertickets&status=actual" class="usermenupoint" id="myticketsiconnew"> <fmt:message key="my_tickets" /> </a>
+
+        <c:when test="${sessionScope.userentity.adminid == 1}">
+            <a href="Controller?command=ticketsonreturn" class="usermenupoint" id="myticketsicon"> <fmt:message key="return_tickets" /> </a>
+            <a href="Controller?command=administration" class="usermenupoint" id="administrate"> <fmt:message key="administrate" /> </a>
+
         </c:when>
+
         <c:otherwise>
-            <a href="Controller?command=usertickets&status=actual" class="usermenupoint" id="myticketsicon"> <fmt:message key="my_tickets" /> </a>
+            <c:choose>
+                <c:when test="${not empty sessionScope.ticketInShoppingCart}">
+                    <a href="Controller?command=usertickets&status=actual" class="usermenupoint" id="myticketsiconnew"> <fmt:message key="my_tickets" /> </a>
+                </c:when>
+                <c:otherwise>
+                    <a href="Controller?command=usertickets&status=actual" class="usermenupoint" id="myticketsicon"> <fmt:message key="my_tickets" /> </a>
+                </c:otherwise>
+            </c:choose>
         </c:otherwise>
     </c:choose>
 
-    <c:if test="${adminrights}">
-        <a href="Controller?command=administration" class="usermenupoint" id="administrate"> <fmt:message key="administrate" /> </a>
-    </c:if>
     <a href="Controller?command=settings" class="usermenupoint" id="settings"> <fmt:message key="settings" /> </a>
     <a href="Controller?command=logout" class="usermenupoint" id="logout"> <fmt:message key="logout" /> </a>
 

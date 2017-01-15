@@ -7,7 +7,7 @@ package epam.railway.dao.implementation;
 
 import epam.railway.dao.interfaces.DaoTicketInterface;
 import epam.railway.entities.Ticket;
-import epam.railway.manager.ConnectionPool;
+import epam.railway.manager.connectionpool.mysql.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,6 +27,8 @@ public class DaoTicket implements DaoTicketInterface{
     private static final String QUERY_ADD_TICKET =
             "INSERT INTO tiket_test (user_id, user_name, user_last_name, start_date_time, end_date_time, price," +
                     "train_number, departure_city, destination_city) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String QUERY_SELECT_ALL_TICKETS_BY_RETURN_STATUS =
+            "SELECT * FROM tiket_test WHERE return_status = 1";
     private static final String QUERY_SELECT_ALL_TICKETS_BY_USER_ID =
             "SELECT * FROM tiket_test WHERE user_id = ?";
     private static final String QUERY_SELECT_ACTUAL_TICKETS_BY_USER_ID =
@@ -35,6 +37,8 @@ public class DaoTicket implements DaoTicketInterface{
             "SELECT * FROM tiket_test WHERE user_id = ? AND start_date_time < ?";
     private static final String QUERY_DELETE_TICKET_BY_TICKET_ID =
             "DELETE FROM tiket_test WHERE id = ?";
+    private static final String QUERY_SET_RETURN_STATUS_BY_TICKET_ID =
+            "UPDATE tiket_test SET return_status = ? WHERE id = ?";
     
     private DaoTicket(){}
     
@@ -113,6 +117,40 @@ public class DaoTicket implements DaoTicketInterface{
                     ticket.setTrainNumber(resultSet.getInt("train_number"));
                     ticket.setDepartureCity(resultSet.getString("departure_city"));
                     ticket.setDestinationCity(resultSet.getString("destination_city"));
+                    ticket.setReturnStatus(resultSet.getInt("return_status"));
+
+                    list.add(ticket);
+                }
+            }
+        } catch (NamingException | SQLException ex) {
+            System.out.println("Ошибка");
+        }
+        return list;
+    }
+
+    public List<Ticket> findByReturnStatus() {
+
+        List<Ticket> list = new ArrayList();
+        String query = QUERY_SELECT_ALL_TICKETS_BY_RETURN_STATUS;
+
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                Ticket ticket;
+                while(resultSet.next()){
+                    ticket = new Ticket();
+                    ticket.setId(resultSet.getInt("id"));
+                    ticket.setUserid(resultSet.getInt("user_id"));
+                    ticket.setUserName(resultSet.getString("user_name"));
+                    ticket.setUserLastName(resultSet.getString("user_last_name"));
+                    ticket.setStartDateTime(resultSet.getTimestamp("start_date_time"));
+                    ticket.setEndDateTime(resultSet.getTimestamp("end_date_time"));
+                    ticket.setPrice(resultSet.getDouble("price"));
+                    ticket.setTrainNumber(resultSet.getInt("train_number"));
+                    ticket.setDepartureCity(resultSet.getString("departure_city"));
+                    ticket.setDestinationCity(resultSet.getString("destination_city"));
+                    ticket.setReturnStatus(resultSet.getInt("return_status"));
 
                     list.add(ticket);
                 }
@@ -131,6 +169,29 @@ public class DaoTicket implements DaoTicketInterface{
 
                 preparedStatement = connection.prepareStatement(QUERY_DELETE_TICKET_BY_TICKET_ID);
                 preparedStatement.setInt(1, ticketId);
+
+                preparedStatement.execute();
+
+            } finally {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            }
+
+        } catch (NamingException | SQLException ex) {
+            System.out.println("Ошибка" + ex.getMessage());
+        }
+    }
+
+    public void returnByTicketId(Integer returnStatus, Integer ticketId){
+        try (Connection connection = ConnectionPool.createConnection()) {
+            PreparedStatement preparedStatement = null;
+
+            try {
+
+                preparedStatement = connection.prepareStatement(QUERY_SET_RETURN_STATUS_BY_TICKET_ID);
+                preparedStatement.setInt(1, returnStatus);
+                preparedStatement.setInt(2, ticketId);
 
                 preparedStatement.execute();
 

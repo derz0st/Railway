@@ -2,7 +2,8 @@ package epam.railway.dao.implementation;
 
 import epam.railway.dao.interfaces.DaoStationInterface;
 import epam.railway.entities.Station;
-import epam.railway.manager.Neo4jConnectionPool;
+import epam.railway.manager.connectionpool.neo4j.Neo4jConnection;
+import epam.railway.manager.connectionpool.neo4j.Neo4jConnectionPool;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -36,9 +37,9 @@ public class DaoStation implements DaoStationInterface{
     @Override
     public List<Station> findByTrainNumber(Integer trainNumber) {
         List<Station> stationlist = null;
-        try {
+        try (Neo4jConnection con = Neo4jConnectionPool.getInstance().getConnection()){
 
-            Connection con = Neo4jConnectionPool.getInstance().retrieve();
+            //Connection con = Neo4jConnectionPool.getInstance().retrieve();
             String query = FIND_STATIONS_BY_TRAIN_ID;
 
             PreparedStatement stmt = con.prepareStatement(query);
@@ -72,6 +73,8 @@ public class DaoStation implements DaoStationInterface{
 
         } catch (/*InstantiationException | IllegalAccessException | ClassNotFoundException |*/ SQLException | ParseException ex) {
             Logger.getLogger(DaoTrainNeo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return stationlist;
     }

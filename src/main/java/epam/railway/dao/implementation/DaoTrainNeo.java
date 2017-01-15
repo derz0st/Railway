@@ -7,9 +7,9 @@ package epam.railway.dao.implementation;
 
 import epam.railway.dao.interfaces.DaoTrainNeoInterface;
 import epam.railway.entities.TrainNeo;
-import epam.railway.manager.Neo4jConnectionPool;
+import epam.railway.manager.connectionpool.neo4j.Neo4jConnection;
+import epam.railway.manager.connectionpool.neo4j.Neo4jConnectionPool;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,9 +49,9 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
     public List<TrainNeo> findByDeparturecityAndDestinationcity(String departureCity, String destinationCity) {
         List<TrainNeo> trainlist = new ArrayList<>();
 
-        try {
+        try (Neo4jConnection con = Neo4jConnectionPool.getInstance().getConnection()){
 
-            Connection con = Neo4jConnectionPool.getInstance().retrieve();
+            //Connection con = Neo4jConnectionPool.getInstance().retrieve();
             String query = FIND_TRAINS_BETWEEN_STATIONS;
             
             PreparedStatement stmt = con.prepareStatement(query);
@@ -73,6 +73,8 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
             }
         } catch ( SQLException ex ) {
             Logger.getLogger(DaoTrainNeo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return trainlist;
     }
@@ -80,9 +82,9 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
     public List<Integer> getAllTrainNumbers(){
         List<Integer> trainNumbers = new ArrayList<>();
 
-        try {
+        try (Neo4jConnection con = Neo4jConnectionPool.getInstance().getConnection()){
 
-            Connection con = Neo4jConnectionPool.getInstance().retrieve();
+            //Connection con = Neo4jConnectionPool.getInstance().retrieve();
             String query = FIND_ALL_TRAIN_NUMBERS;
 
             PreparedStatement stmt = con.prepareStatement(query);
@@ -95,6 +97,8 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
 
         } catch ( SQLException ex ) {
             Logger.getLogger(DaoTrainNeo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return trainNumbers;
     }

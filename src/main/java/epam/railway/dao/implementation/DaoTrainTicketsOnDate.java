@@ -2,11 +2,10 @@ package epam.railway.dao.implementation;
 
 import epam.railway.dao.interfaces.DaoTrainTicketsOnDateInterface;
 import epam.railway.entities.TrainTicketsOnDate;
-import epam.railway.manager.ConnectionPool;
+import epam.railway.manager.connectionpool.mysql.ConnectionPool;
 
 import javax.naming.NamingException;
 import java.sql.*;
-import java.util.List;
 
 /**
  * Created by denis on 29.12.16.

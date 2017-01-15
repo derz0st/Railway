@@ -30,9 +30,9 @@ public class CommandNotAdminUsers implements ICommand{
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
         String page;
         HttpSession session = request.getSession(false);
-        Boolean isAdmin = (Boolean)session.getAttribute(ADMIN_RIGHTS);
+        //Boolean isAdmin = (Boolean)session.getAttribute(ADMIN_RIGHTS);
         try {
-            List<User> users = UserService.findNotAdminUsers(isAdmin);
+            List<User> users = UserService.findNotAdminUsers(true);
             request.setAttribute(USERS, users);
             
 

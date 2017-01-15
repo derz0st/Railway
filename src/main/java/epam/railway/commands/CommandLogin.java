@@ -77,15 +77,20 @@ public class CommandLogin implements ICommand{
                 session.setAttribute("userentity", user);
                 session.setAttribute(LANGUAGE, ENGLISH);
 
-                if (user.getAdminid() == 1) {
-                    session.setAttribute(ADMIN_RIGHTS, true);
+                if (user.getIsBlocked() != 1) {
+                    String lang = (String) session.getAttribute(LANGUAGE);
+                    request.setAttribute(TRAINS, null);
+                    if (user.getAdminid() == 1){
+                        page = new CommandGetReturnTickets().execute(request, responce);
+                    } else {
+                        page = Config.getInstance().getProperty(Config.ORDER);
+                    }
+                } else {
+                    request.setAttribute(ERROR, "Пользователь заблокирован. Обратитесь в службу поддержки");
+                    page = Config.getInstance().getProperty(Config.ERROR);
                 }
 
-                String lang = (String) session.getAttribute(LANGUAGE);
 
-
-                request.setAttribute(TRAINS, null);
-                page = Config.getInstance().getProperty(Config.ORDER);
 
             } catch (LoginException ex) {
                 request.setAttribute(ERROR, ex.getMessage());

@@ -8,40 +8,53 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
+        <mysql.driver.version>5.1.17</mysql.driver.version>
+        <neo4j.driver.version>3.0.1</neo4j.driver.version>
+        <log4j.api.version>2.4.1</log4j.api.version>
+        <log4j.core.version>2.4.1</log4j.core.version>
+        <jstl.version>1.2</jstl.version>
+        <junit.version>4.12</junit.version>
     </properties>
-    
+
+
     <dependencies>
     
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.17</version>
+            <version>${mysql.driver.version}</version>
         </dependency>
+
         
         <dependency>
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-jdbc-driver</artifactId>
-            <version>3.0.1</version>
+            <version>${neo4j.driver.version}</version>
             <type>jar</type>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.4.1</version>
+            <version>${log4j.api.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.4.1</version>
+            <version>${log4j.core.version}</version>
         </dependency>
         
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${jstl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
         </dependency>
 
         <dependency>
@@ -56,9 +69,25 @@
             <artifactId>persistence-api</artifactId>
             <version>1.0.2</version>
         </dependency>
-        
-        
-       </dependencies> 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>7.0.47</version>
+        </dependency>
+
+
+    </dependencies>
       <build>
         <plugins>
             <plugin>

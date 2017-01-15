@@ -7,7 +7,6 @@ package epam.railway.commands;
 
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.entities.Ticket;
-import epam.railway.entities.Train;
 import epam.railway.entities.User;
 import epam.railway.manager.Config;
 
@@ -66,7 +65,7 @@ public class CommandPay implements ICommand{
         // train_number
         String trainId = request.getParameter(TRAIN_ID);
         Integer trainNumber = Integer.valueOf(trainId);
-        Train train = DaoFactory.getDaoTrain().findById(Integer.parseInt(trainId));
+        //Train train = DaoFactory.getDaoTrain().findById(Integer.parseInt(trainId));
         HttpSession session = request.getSession(false);
 
         Integer userId = (Integer) session.getAttribute(USER_ID);
@@ -86,7 +85,7 @@ public class CommandPay implements ICommand{
         ticket.setDestinationCity(destinationCity);
         
         request.setAttribute(USER, user);
-        request.setAttribute(TRAIN, train);
+        //request.setAttribute(TRAIN, train);
         request.setAttribute("ticket", ticket);
         request.setAttribute("status", "new");
 

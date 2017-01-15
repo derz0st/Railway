@@ -45,12 +45,22 @@
                 <fmt:formatDate pattern="HH:mm" value="${ticket.endDateTime}" />
             </div>
             <div class="itemj">
-                <h4> <fmt:message key="travel_time" /> </h4>
-
+                <h4> <fmt:message key="ticket_price" /> </h4>
+                ${ticket.price}
             </div>
             <div class="itemj">
-                <h4> <fmt:message key="ticket_price" /> </h4>
-                    ${ticket.price}
+                <h4> <fmt:message key="ticket_status" /> </h4>
+                <c:choose>
+                    <c:when test="${ticket.returnStatus == 2}">
+                        <h5> returned </h5>
+                    </c:when>
+                    <c:when test="${ticket.returnStatus == 1}">
+                        <h5> waiting </h5>
+                    </c:when>
+                    <c:otherwise>
+                        <h5> active </h5>
+                    </c:otherwise>
+                </c:choose>
 
             </div>
 
@@ -66,6 +76,23 @@
                 <div class="topname"> <fmt:message key="travel_date" /></div>
                 <fmt:formatDate pattern="dd-MM-yyyy" value="${ticket.startDateTime}" />
             </div>
+            <c:choose>
+                <c:when test="${ticket.returnStatus == 2}">
+                    <a href="Controller?command=returnticket&ticketid=${ticket.id}">
+                        <div class="delete_ticket"></div>
+                    </a>
+                </c:when>
+                <c:when test="${ticket.returnStatus == 1}">
+                    
+                </c:when>
+                <c:otherwise>
+                    <a href="Controller?command=returnticket&ticketid=${ticket.id}">
+                        <div class="delete_ticket" id="return_ticket"></div>
+                    </a>
+                </c:otherwise>
+            </c:choose>
+
+
         </div>
 
 

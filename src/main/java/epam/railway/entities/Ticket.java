@@ -25,6 +25,7 @@ public class Ticket {
     private Integer trainNumber;
     private String departureCity;
     private String destinationCity;
+    private Integer returnStatus;
 
     public Integer getId() {
         return id;
@@ -104,6 +105,14 @@ public class Ticket {
 
     public void setDestinationCity(String destinationCity) {
         this.destinationCity = destinationCity;
+    }
+
+    public Integer getReturnStatus() {
+        return returnStatus;
+    }
+
+    public void setReturnStatus(Integer returnStatus) {
+        this.returnStatus = returnStatus;
     }
 
     @Override

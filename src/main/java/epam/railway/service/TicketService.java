@@ -55,6 +55,16 @@ public class TicketService {
         return userTickets;
     }
 
+    public List<Ticket> getReturnTickets(){
+        List<Ticket> userTickets = DaoFactory.getDaoTicket().findByReturnStatus();
+        Collections.sort(userTickets, new TicketDateComparator());
+        return userTickets;
+    }
+
+    public void acceptReturn(Integer ticketId){
+        DaoFactory.getDaoTicket().returnByTicketId(2, ticketId);
+    }
+
 
 //    private static final Logger log = Logger.getLogger(TicketService.class.getName());
 //    private static final String FORMAT = "dd-MM-yyyy";
