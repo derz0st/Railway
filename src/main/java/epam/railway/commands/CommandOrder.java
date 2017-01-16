@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -64,13 +65,26 @@ public class CommandOrder implements ICommand{
                 SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_TEMPLATE);
                 Date parsedDate = dateFormat.parse(request.getParameter(DATE));
                 Timestamp travelDate = new Timestamp(parsedDate.getTime());
-                List list = TrainSevice.getInstance().findByDeparturecityAndDestinationcity(departureCity, destinationCity, travelDate);
+                Calendar today = Calendar.getInstance();
+                today.set(Calendar.HOUR_OF_DAY, 0);
+                today.set(Calendar.MINUTE, 0);
+                today.set(Calendar.SECOND, 0);
+                today.roll(Calendar.DAY_OF_YEAR, -1);
+                Timestamp currentDay = new Timestamp(today.getTimeInMillis());
 
-                if (list.size() != 0 ) {
-                    request.setAttribute(TRAINS, list);
+                if(travelDate.after(currentDay)) {
 
-                }else{
-                    request.setAttribute(ERROR, Message.getInstance().getProperty(Message.NO_TRAINS));
+                    List list = TrainSevice.getInstance().findByDeparturecityAndDestinationcity(departureCity, destinationCity, travelDate);
+
+                    if (list.size() != 0) {
+                        request.setAttribute(TRAINS, list);
+
+                    } else {
+                        request.setAttribute(ERROR, Message.getInstance().getProperty(Message.NO_TRAINS));
+                    }
+
+                } else {
+                    request.setAttribute(ERROR, "Дата отправления некоректна");
                 }
 
             } catch (ParseException ex) {

@@ -62,13 +62,15 @@
                     <h4> <fmt:message key="arrival_time" /> </h4>
                     <fmt:formatDate pattern="HH:mm" value="${ticket.endDateTime}" />
                 </div>
-                <div class="itemj">
-                    <h4> <fmt:message key="travel_time" /> </h4>
 
-                </div>
                 <div class="itemj">
                     <h4> <fmt:message key="ticket_price" /> </h4>
                         ${ticket.price}
+
+                </div>
+                <div class="itemj">
+                    <h4> <fmt:message key="ticket_status" /> </h4>
+                    <h5> waiting </h5>
 
                 </div>
 

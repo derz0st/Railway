@@ -26,13 +26,22 @@ public class CommandDeleteTicket implements ICommand{
         String page = null;
         Integer ticketId = Integer.parseInt(request.getParameter(TICKET_ID));
         TicketService.deleteTicket(ticketId);
-        request.setAttribute("userid", Integer.valueOf(request.getParameter("userid")));
+        String currentUser = request.getParameter(USER_ID);
+
+        if (currentUser != null) {
+            Integer userId = Integer.valueOf(currentUser);
+            request.setAttribute("userid", userId);
+            page = new CommandGetCustomerTickets().execute(request, responce);
+        } else {
+            page = new CommandReturnTicket().execute(request, responce);
+        }
+
 
         //List<Ticket> tickets = DaoFactory.getDaoTicket().findByUserid(userId);
         
         //request.setAttribute(TICKETS, tickets);
         //page = Config.getInstance().getProperty(Config.USER_TICKETS);
-        page = new CommandGetCustomerTickets().execute(request, responce);
+        //page = new CommandGetCustomerTickets().execute(request, responce);
         return page;
     }
     

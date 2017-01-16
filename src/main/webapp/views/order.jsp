@@ -176,7 +176,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker2').datetimepicker({language: 'ru', format: 'DD-MM-YYYY hh:mm', startDate: '28/12/2016', endDate: '29/12/2016'});
+        $('#datetimepicker2').datetimepicker({language: 'ru', format: 'DD-MM-YYYY', startDate: '28-12-2016', endDate: '29-12-2016'});
     });
 </script>
 

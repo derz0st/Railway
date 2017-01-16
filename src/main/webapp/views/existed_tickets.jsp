@@ -78,12 +78,12 @@
             </div>
             <c:choose>
                 <c:when test="${ticket.returnStatus == 2}">
-                    <a href="Controller?command=returnticket&ticketid=${ticket.id}">
+                    <a href="Controller?command=deleteticket&ticketid=${ticket.id}">
                         <div class="delete_ticket"></div>
                     </a>
                 </c:when>
                 <c:when test="${ticket.returnStatus == 1}">
-                    
+
                 </c:when>
                 <c:otherwise>
                     <a href="Controller?command=returnticket&ticketid=${ticket.id}">
