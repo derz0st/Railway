@@ -36,6 +36,26 @@ public class DaoUser implements DaoUserInterface {
         }
         return instance;
     }
+
+
+    public boolean findByEmail(String email) {
+
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ?")) {
+
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if(resultSet.next()){
+                    return true;
+                }
+            }
+        } catch (NamingException | SQLException ex) {
+            System.out.println("какич");
+            log.error(ex.getMessage());
+        }
+        return false;
+    }
     
     @Override
     public User findByEmailAndPassword(String email, String password) {
@@ -118,7 +138,7 @@ public class DaoUser implements DaoUserInterface {
         List<User> list = new ArrayList();
         
         try (Connection connection = ConnectionPool.createConnection(); 
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE adminid IS NULL"); 
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE adminid = 0");
             ResultSet resultSet = preparedStatement.executeQuery()) {
                 
             while(resultSet.next()){

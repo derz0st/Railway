@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-    <!-- Секция аппендеров -->
+    <!-- Appenders section -->
     <Appenders>
-        <!-- Файловый аппендер -->
+        <!-- File appender -->
         <File name="file" fileName="railwaylog.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>
@@ -10,9 +10,9 @@
         </File>
 
     </Appenders>
-    <!-- Секция логгеров -->
+    <!-- Loggers section -->
     <Loggers>
-        <!-- Корневой логгер -->
+        <!-- Root logger -->
         <Root level="trace">
             <AppenderRef ref="file" level="DEBUG"/>
         </Root>

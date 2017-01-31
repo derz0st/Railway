@@ -75,37 +75,39 @@ public class DaoTrainTicketsOnDate implements DaoTrainTicketsOnDateInterface{
     }
 
 
-    public void incBusySeatsByTrainNumberAndDate(Integer trainNumber, Timestamp date){
+    public boolean incBusySeatsByTrainNumberAndDate(Integer trainNumber, Timestamp date){
 
         try (Connection connection = ConnectionPool.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INC_BUSY_SEATS)) {
 
             preparedStatement.setInt(1, trainNumber);
-            preparedStatement.setString(2, date.toString());
+            preparedStatement.setTimestamp(2, date);
 
             preparedStatement.executeUpdate();
 
         } catch (NamingException | SQLException ex) {
             System.out.println("ошибка");
+            return false;
         }
 
+        return true;
     }
 
-    public void descBusySeatsByTrainNumberAndDate(Integer trainNumber, Timestamp date){
+    public boolean descBusySeatsByTrainNumberAndDate(Integer trainNumber, Timestamp date){
 
         try (Connection connection = ConnectionPool.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(QUERY_DESC_BUSY_SEATS)) {
-
-
+            connection.setAutoCommit(false);
             preparedStatement.setInt(1, trainNumber);
-            preparedStatement.setString(2, date.toString());
+            preparedStatement.setTimestamp(2, date);
 
             preparedStatement.executeUpdate();
-
+            connection.commit();
         } catch (NamingException | SQLException ex) {
             System.out.println("ошибка");
+            return false;
         }
-
+        return true;
     }
 
 }

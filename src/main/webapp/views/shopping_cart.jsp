@@ -46,13 +46,13 @@
             <fmt:formatDate pattern="HH:mm" value="${sessionScope.ticketInShoppingCart.endDateTime}" />
         </div>
         <div class="itemj">
-            <h4> <fmt:message key="travel_time" /> </h4>
-
-        </div>
-        <div class="itemj">
             <h4> <fmt:message key="ticket_price" /> </h4>
             ${sessionScope.ticketInShoppingCart.price}
 
+        </div>
+        <div class="itemj">
+            <h4> <fmt:message key="ticket_status" /> </h4>
+            <h5> reserved </h5>
         </div>
 
     </div>

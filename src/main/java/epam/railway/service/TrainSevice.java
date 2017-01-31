@@ -35,9 +35,17 @@ public class TrainSevice {
         List<TrainNeo> actualTrains = new ArrayList<>();
         List<Station> stationList;
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Timestamp dateWithoutTime = new Timestamp(calendar.getTimeInMillis());
+
         for (TrainNeo train: trains) {
 
-            TrainTicketsOnDate trainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate().findByTrainNumberAndDate(train.getId(), date);
+            TrainTicketsOnDate trainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate().findByTrainNumberAndDate(train.getId(), dateWithoutTime);
+
             if(trainTicketsOnDate != null && trainTicketsOnDate.getBusySeats() < trainTicketsOnDate.getTotalSeats() ) {
 
                 Integer departureSt = 0, destinationSt = 0;
@@ -59,9 +67,9 @@ public class TrainSevice {
                 train.setArrivalTime(stationList.get(destinationSt).getArrivalTime());
                 train.setArrivalCity(stationList.get(stationList.size()-1).getName());
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(train.getArrivalTime().getTime() - train.getDepartureTime().getTime() - 97200000);
-                train.setTravelTime(calendar);
+                Calendar calendarTravelTime = Calendar.getInstance();
+                calendarTravelTime.setTimeInMillis(train.getArrivalTime().getTime() - train.getDepartureTime().getTime() - 97200000);
+                train.setTravelTime(calendarTravelTime);
 
                 Double price = 0.0;
 
@@ -71,9 +79,20 @@ public class TrainSevice {
 
                 train.setPrice(price);
                 train.setTrainTicketsOnDate(trainTicketsOnDate);
+                Calendar calendarCurrent = Calendar.getInstance();
+                calendarCurrent.setTimeInMillis(date.getTime());
+                calendarCurrent.set(0, 0, 0);
+                Calendar calendarTrain = Calendar.getInstance();
+                calendarTrain.setTimeInMillis(train.getDepartureTime().getTime());
+
+                calendarTrain.set(0, 0, 0);
 
 
-                actualTrains.add(train);
+
+
+                if (calendarTrain.after(calendarCurrent)) {
+                    actualTrains.add(train);
+                }
 
             }
         }

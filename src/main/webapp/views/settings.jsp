@@ -40,22 +40,22 @@
                 <div class="input-container">
                     <input type="text" id="Firstname" name="firstname" value="${user.firstname}" required="required"/>
                     <label for="Firstname"> <fmt:message key="first_name" /> </label>
-                    <div class="bar"></div>
+                    <div class="bar">${first_name_error}</div>
                 </div>
                 <div class="input-container">
                     <input type="text" id="Lastname" name="lastname" value="${user.lastname}" required="required"/>
                         <label for="Lastname">  <fmt:message key="last_name" />  </label>
-                        <div class="bar"></div>
+                        <div class="bar">${last_name_error}</div>
                 </div>
                 <div class="input-container">
                         <input type="text" id="Email" name="email" value="${user.email}" required="required"/>
                         <label for="Email">  <fmt:message key="email" />  </label>
-                        <div class="bar"></div>
+                        <div class="bar">${email_error}</div>
                 </div>
                 <div class="input-container">
                     <input type="password" id="Password" name="password" value="${user.password}" required="required"/>
                         <label for="Password">  <fmt:message key="password" />  </label>
-                        <div class="bar"></div>
+                        <div class="bar">${password_error}</div>
                 </div>
                 <select class="minimal" name="language">
                     <option value="${language}" selected> <fmt:message key="interface_language" /> </option>

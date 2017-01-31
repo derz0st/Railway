@@ -7,13 +7,24 @@ package epam.railway.dao.interfaces;
 
 import epam.railway.entities.Ticket;
 
+import java.util.List;
+
 
 /**
  *
  * @author denis
  */
 public interface DaoTicketInterface {
+    /**
+     *
+     * @param ticket ticket to be appended to database
+     */
     void addTicket (Ticket ticket);
+    Ticket findByTicketid(Integer ticketId);
+    List<Ticket> findByUserid(Integer userId, Boolean actual);
+    List<Ticket> findByReturnStatus();
+    void deleteByTicketId(Integer ticketId);
+    void returnByTicketId(Integer returnStatus, Integer ticketId);
 //    Ticket findById(Integer id);
 //    List<Ticket> findByUserid(Integer userId);
 //    void deleteById(Integer id);

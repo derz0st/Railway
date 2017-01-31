@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package epam.railway.commands;
+package epam.railway.commands.train;
 
+import epam.railway.commands.ICommand;
 import epam.railway.manager.Config;
 import epam.railway.manager.Message;
 import epam.railway.service.TrainSevice;
@@ -24,7 +25,7 @@ import java.util.List;
  *
  * @author denis
  */
-public class CommandOrder implements ICommand{
+public class CommandOrder implements ICommand {
     
     private static final String
             ERROR = "error",
@@ -36,8 +37,8 @@ public class CommandOrder implements ICommand{
             DESTINATION_ERROR = "destination_error",
             DATE_ERROR = "date_error",
             ERROR_EMPTY = "empty field",
-            DATE_FORMAT_TEMPLATE = "dd-MM-yyyy",
-            ERROR_INCORRECT_FORMAT = "Enter date in next format: dd-MM-yyyy HH:mm";
+            DATE_FORMAT_TEMPLATE = "dd-MM-yyyy HH:mm",
+            ERROR_INCORRECT_FORMAT = "Enter date in next format: dd-MM-yyyy";
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
@@ -64,15 +65,17 @@ public class CommandOrder implements ICommand{
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_TEMPLATE);
                 Date parsedDate = dateFormat.parse(request.getParameter(DATE));
+
                 Timestamp travelDate = new Timestamp(parsedDate.getTime());
                 Calendar today = Calendar.getInstance();
-                today.set(Calendar.HOUR_OF_DAY, 0);
-                today.set(Calendar.MINUTE, 0);
-                today.set(Calendar.SECOND, 0);
-                today.roll(Calendar.DAY_OF_YEAR, -1);
+
+                // Spare time for enter data
+                today.roll(Calendar.MINUTE, -2);
                 Timestamp currentDay = new Timestamp(today.getTimeInMillis());
 
-                if(travelDate.after(currentDay)) {
+                if(travelDate.after(new Timestamp(currentDay.getTime()))) {
+                    System.out.println(travelDate);
+                    System.out.println(currentDay);
 
                     List list = TrainSevice.getInstance().findByDeparturecityAndDestinationcity(departureCity, destinationCity, travelDate);
 
@@ -84,7 +87,7 @@ public class CommandOrder implements ICommand{
                     }
 
                 } else {
-                    request.setAttribute(ERROR, "Дата отправления некоректна");
+                    request.setAttribute(ERROR, Message.getInstance().getProperty(Message.INCORRECT_DATE));
                 }
 
             } catch (ParseException ex) {

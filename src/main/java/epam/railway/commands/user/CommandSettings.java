@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package epam.railway.commands;
+package epam.railway.commands.user;
 
-import epam.railway.dao.daofactory.DaoFactory;
+import epam.railway.commands.ICommand;
 import epam.railway.entities.User;
 import epam.railway.manager.Config;
+import epam.railway.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,25 +17,25 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- *
- * @author denis
+ * Command for display user settings
  */
-public class CommandSettings implements ICommand{
-    private static final String USER_ID = "userid";
+public class CommandSettings implements ICommand {
+
+    private static final String USER_ENTITY = "userentity";
     private static final String USER = "user";
-    private static final String LANGUAGE = "language";
     
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String page;
         HttpSession session = request.getSession(false);
-        Integer id = (Integer)session.getAttribute(USER_ID);
+        User currentUser = (User)session.getAttribute(USER_ENTITY);
         
-        User user = DaoFactory.getDaoUser().findById(id);
-        
+        User user = UserService.getInstance().findUser(currentUser.getId());
         request.setAttribute(USER, user);
-        request.setAttribute(LANGUAGE, (String)session.getAttribute(LANGUAGE));
+
         page = Config.getInstance().getProperty(Config.SETTINGS);
         return page;
     }
+
 }

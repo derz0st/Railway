@@ -40,7 +40,7 @@
     <jsp:include page="headerpanel.jsp" />
 
     <c:if test="${empty tickets}">
-        <div class="errortextblock"> <fmt:message key="error_actual_tickets" /> </div>
+        <div class="errortextblock"> <fmt:message key="error_return_tickets" /> </div>
     </c:if>
 
     <c:forEach var="ticket" items="${tickets}">

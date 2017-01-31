@@ -17,9 +17,11 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        
+    <a href="Controller?command=findtickets">
+        <div class="logo"></div>
+    </a> <br> <br>
         <div class="container">
-            <jsp:include page="headerpanel.jsp" />
+
 
 	<center> 
             <span> 

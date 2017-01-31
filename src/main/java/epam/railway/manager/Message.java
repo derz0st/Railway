@@ -21,7 +21,13 @@ public class Message {
     public static final String LOGIN_ERROR = "LOGIN_ERROR";
     public static final String INPUT_ERROR = "INPUT_ERROR";
     public static final String TRAIN_NOT_EXIST = "TRAIN_NOT_EXIST";
-    public static final String PERMISSION_DENIED = "PERMISSION_DENIED";
+    public static final String PERMISSION_DENIED = "permission_denied",
+            PARSE_EXCEPTION = "parse_exception",
+            NO_SEATS = "no_seats",
+            EXISTED_TICKET = "already_existed_ticket",
+            INCORRECT_DATE = "incorrect_date",
+            INCORRECT_L_OR_P = "incorrect_l_or_p",
+            BLOCKED_USER = "blocked_user";
     public static final String UNEXIST_PAGE = "UNEXIST_PAGE";
     public static final String NO_TRAINS = "NO_TRAINS";
 

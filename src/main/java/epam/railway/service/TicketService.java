@@ -6,11 +6,17 @@
 package epam.railway.service;
 
 import epam.railway.dao.daofactory.DaoFactory;
+import epam.railway.dao.interfaces.DaoTicketInterface;
 import epam.railway.entities.Ticket;
 import epam.railway.entities.comparators.TicketDateComparator;
+import epam.railway.manager.jotmtransaction.JotmTransaction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.naming.NamingException;
+import javax.transaction.*;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +26,7 @@ import java.util.List;
  */
 public class TicketService {
 
+    private DaoTicketInterface daoTicket = DaoFactory.getDaoTicket();
     private static TicketService instance;
     private static final Logger log = LogManager.getLogger(TicketService.class.getName());
 
@@ -30,6 +37,10 @@ public class TicketService {
             instance = new TicketService();
         }
         return instance;
+    }
+
+    public Ticket findTicketById(Integer ticketId){
+        return DaoFactory.getDaoTicket().findByTicketid(ticketId);
     }
 
     public boolean addTicket(Ticket ticket){
@@ -61,28 +72,51 @@ public class TicketService {
         return userTickets;
     }
 
-    public void acceptReturn(Integer ticketId){
-        DaoFactory.getDaoTicket().returnByTicketId(2, ticketId);
+    public void returnTicket(Integer ticketId){
+        daoTicket.returnByTicketId(1, ticketId);
+    }
+
+    public void acceptReturn(Ticket ticket) {
+
+
+        UserTransaction userTransaction = null;
+
+        try {
+            userTransaction = JotmTransaction.getUserTransaction();
+
+            Calendar ticketDate = Calendar.getInstance();
+            ticketDate.setTimeInMillis(ticket.getStartDateTime().getTime());
+            ticketDate.set(Calendar.HOUR_OF_DAY, 0);
+            ticketDate.set(Calendar.MINUTE, 0);
+            ticketDate.set(Calendar.SECOND, 0);
+            Timestamp ticketDateWithoutTime = new Timestamp(ticketDate.getTimeInMillis());
+
+            userTransaction.begin();
+
+            DaoFactory.getDaoTrainTicketsOnDate().descBusySeatsByTrainNumberAndDate(ticket.getTrainNumber(), ticketDateWithoutTime);
+            DaoFactory.getDaoTicket().returnByTicketId(2, ticket.getId());
+            System.out.println("Статус транзакции: " + userTransaction.getStatus());
+
+            System.out.println("Статус транзакции 2: " + userTransaction.getStatus());
+            //это всё не работает
+            if (true){
+                userTransaction.rollback();
+            }else userTransaction.commit();
+            System.out.println("Строка commit позади");
+
+        } catch (NamingException | HeuristicRollbackException | NotSupportedException | SystemException | HeuristicMixedException | RollbackException e) {
+            System.out.println("Не получилось");
+            try {
+                userTransaction.rollback();
+            } catch (SystemException e1) {
+                System.out.println("Не получилось1");
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
     }
 
 
-//    private static final Logger log = Logger.getLogger(TicketService.class.getName());
-//    private static final String FORMAT = "dd-MM-yyyy";
-//
-//    public static void addTicket(Integer userId, Integer trainId, String dateString) throws ParseException{
-//
-//        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT);
-//        Date date = formatter.parse(dateString);
-//        Train train = DaoFactory.getDaoTrain().findById(trainId);
-//
-//        if(train != null){
-//            DaoFactory.getDaoTicket().addTicket(userId, train.getId(), date, train.getDeparturetime());
-//        } else {
-//            throw new EntityNotFoundException(Message.getInstance().getProperty(Message.TRAIN_NOT_EXIST));
-//        }
-//
-//    }
-//
     public static void deleteTicket(Integer ticketId) {
         DaoFactory.getDaoTicket().deleteByTicketId(ticketId);
         log.info("Remove ticket: ticketId = " + ticketId);

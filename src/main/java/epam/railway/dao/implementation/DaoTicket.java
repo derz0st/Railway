@@ -39,6 +39,8 @@ public class DaoTicket implements DaoTicketInterface{
             "DELETE FROM tiket_test WHERE id = ?";
     private static final String QUERY_SET_RETURN_STATUS_BY_TICKET_ID =
             "UPDATE tiket_test SET return_status = ? WHERE id = ?";
+    private static final String QUERY_SELECT_BY_TICKET_ID =
+            "SELECT * FROM tiket_test WHERE id = ?";
     
     private DaoTicket(){}
     
@@ -76,10 +78,46 @@ public class DaoTicket implements DaoTicketInterface{
             }
             
         } catch (NamingException | SQLException ex) {
-            System.out.println("Ошибка" + ex.getMessage());
+            System.out.println("Ошибка в добавлении билета" + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
+    public Ticket findByTicketid(Integer ticketId) {
+
+        Ticket ticket = null;
+        String query = QUERY_SELECT_BY_TICKET_ID;
+
+
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, ticketId.toString());
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (resultSet.next()){
+
+                    ticket = new Ticket();
+                    ticket.setId(resultSet.getInt("id"));
+                    ticket.setUserid(resultSet.getInt("user_id"));
+                    ticket.setUserName(resultSet.getString("user_name"));
+                    ticket.setUserLastName(resultSet.getString("user_last_name"));
+                    ticket.setStartDateTime(resultSet.getTimestamp("start_date_time"));
+                    ticket.setEndDateTime(resultSet.getTimestamp("end_date_time"));
+                    ticket.setPrice(resultSet.getDouble("price"));
+                    ticket.setTrainNumber(resultSet.getInt("train_number"));
+                    ticket.setDepartureCity(resultSet.getString("departure_city"));
+                    ticket.setDestinationCity(resultSet.getString("destination_city"));
+                    ticket.setReturnStatus(resultSet.getInt("return_status"));
+
+                }
+            }
+        } catch (NamingException | SQLException ex) {
+            System.out.println("Ошибка");
+        }
+        return ticket;
+    }
 
     public List<Ticket> findByUserid(Integer userId, Boolean actual) {
 
@@ -186,7 +224,7 @@ public class DaoTicket implements DaoTicketInterface{
     public void returnByTicketId(Integer returnStatus, Integer ticketId){
         try (Connection connection = ConnectionPool.createConnection()) {
             PreparedStatement preparedStatement = null;
-
+            connection.setAutoCommit(false);
             try {
 
                 preparedStatement = connection.prepareStatement(QUERY_SET_RETURN_STATUS_BY_TICKET_ID);
@@ -200,7 +238,7 @@ public class DaoTicket implements DaoTicketInterface{
                     preparedStatement.close();
                 }
             }
-
+            connection.commit();
         } catch (NamingException | SQLException ex) {
             System.out.println("Ошибка" + ex.getMessage());
         }

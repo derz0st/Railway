@@ -44,7 +44,9 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
         }
         return instance;
     }
-    
+
+
+
     @Override
     public List<TrainNeo> findByDeparturecityAndDestinationcity(String departureCity, String destinationCity) {
         List<TrainNeo> trainlist = new ArrayList<>();

@@ -14,6 +14,15 @@ a:link, a:visited, a:active {
 	color: #666666;
 }
 
+.redirect_sign_in{
+	margin-top: 10px;
+	font-weight: bold;
+	width: 100%;
+	height: 20px;
+	color: #e6e6e6;
+	text-align: center;
+}
+
 .error{
 	margin-top: 60px;
 }
@@ -340,7 +349,7 @@ a:link, a:visited, a:active {
 	line-height: 27px;
 	font-size: 12px;
 	color: #2b2b2b;
-	width: 120px;
+	width: 130px;
 	overflow: hidden;
 	height: 50px;
 	float: left;
@@ -1043,6 +1052,532 @@ body {
 .card.alt .button-container button:active:before, .card.alt .button-container button:focus:before {
 	display: none;
 }
+
+.singupform{
+	margin: 0 auto;
+	margin-top: 25px;
+	width: 380px;
+	height: 530px;
+	padding-top: 10px;
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	background-color: white;
+}
+.singupform .input-container {
+	float: left;
+	position: relative;
+	margin-left: 30px;
+	margin-top: 5px;
+	margin-bottom: 20px;
+	width: 315px;
+}
+.singupform .input-container input {
+	outline: none;
+	z-index: 1;
+	position: relative;
+	background: none;
+	width: 100%;
+	height: 60px;
+	border: 0;
+	color: #212121;
+	font-size: 17px;
+	font-weight: 400;
+}
+.singupform .input-container input:focus ~ label {
+	color: #9d9d9d;
+	-webkit-transform: translate(-12%, -35%) scale(0.75);
+	transform: translate(-12%, -35%) scale(0.75);
+}
+.singupform .input-container input:focus ~ .bar:before, .singupform .input-container input:focus ~ .bar:after {
+	width: 50%;
+}
+.singupform .input-container input:valid ~ label {
+	color: #9d9d9d;
+	-webkit-transform: translate(-12%, -35%) scale(0.75);
+	transform: translate(-12%, -35%) scale(0.75);
+}
+.singupform .input-container label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: #757575;
+	font-size: 17px;
+	font-weight: 300;
+	line-height: 60px;
+	-webkit-transition: 0.2s ease;
+	transition: 0.2s ease;
+}
+.singupform .input-container .bar {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	background: #757575;
+	line-height: 20px;
+	color: #b70808;
+	font-size: 11px;
+	width: 100%;
+	height: 1px;
+}
+
+.date_error{
+	min-height: 20px;
+	line-height: 20px;
+	color: #b70808;
+	font-size: 11px;
+}
+
+.singupform .input-container .bar:before, .singupform .input-container .bar:after {
+	content: '';
+	position: absolute;
+	background: #ed2553;
+	width: 0;
+	height: 2px;
+	-webkit-transition: .2s ease;
+	transition: .2s ease;
+}
+.singupform .input-container .bar:before {
+	left: 50%;
+}
+.singupform .input-container .bar:after {
+	right: 50%;
+}
+.singupform .button-container {
+	margin: 0 30px;
+	text-align: center;
+}
+.singupform .button-container button {
+	outline: 0;
+	cursor: pointer;
+	position: relative;
+	display: inline-block;
+	background: 0;
+	width: 100%;
+	border: 2px solid #e3e3e3;
+	padding: 20px 0;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 1;
+	text-transform: uppercase;
+	overflow: hidden;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.singupform .button-container button span {
+	position: relative;
+	z-index: 1;
+	color: #ddd;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.singupform .button-container button:before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: block;
+	background: #ed2553;
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+	margin: -15px 0 0 -15px;
+	opacity: 0;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.singupform .button-container button:hover, .singupform .button-container button:active, .singupform .button-container button:focus {
+	border-color: #ed2553;
+}
+.singupform .button-container button:hover span, .singupform .button-container button:active span, .singupform .button-container button:focus span {
+	color: #ed2553;
+}
+.singupform .button-container button:active span, .singupform .button-container button:focus span {
+	color: #ffffff;
+}
+.singupform .button-container button:active:before, .singupform .button-container button:focus:before {
+	opacity: 1;
+	-webkit-transform: scale(10);
+	transform: scale(10);
+}
+.singupform .footer {
+	margin: 40px 0 0;
+	color: #d3d3d3;
+	font-size: 24px;
+	font-weight: 300;
+	text-align: center;
+}
+.singupform .footer a {
+	color: inherit;
+	text-decoration: none;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.singupform .footer a:hover {
+	color: #bababa;
+}
+.singupform.alt {
+	position: absolute;
+	top: 40px;
+	right: -70px;
+	z-index: 10;
+	width: 140px;
+	height: 140px;
+	background: none;
+	border-radius: 100%;
+	box-shadow: none;
+	padding: 0;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+	/* Toggle */
+	/* Title */
+	/* Input */
+	/* Button */
+}
+.singupform.alt .toggle {
+	position: relative;
+	background: #ed2553;
+	width: 140px;
+	height: 140px;
+	border-radius: 100%;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	color: #ffffff;
+	font-size: 58px;
+	line-height: 140px;
+	text-align: center;
+	cursor: pointer;
+}
+.singupform.alt .toggle:before {
+	content: '\f040';
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-transform: translate(0, 0);
+	transform: translate(0, 0);
+}
+.singupform.alt .title,
+.singupform.alt .input-container,
+.singupform.alt .button-container {
+	left: 100px;
+	opacity: 0;
+	visibility: hidden;
+}
+.singupform.alt .title {
+	position: relative;
+	border-color: #ffffff;
+	color: #ffffff;
+}
+.singupform.alt .title .close {
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 60px;
+	display: inline;
+	color: #ffffff;
+	font-size: 58px;
+	font-weight: 400;
+}
+.singupform.alt .title .close:before {
+	content: '\00d7';
+}
+.singupform.alt .input-container input {
+	color: #ffffff;
+}
+.singupform.alt .input-container input:focus ~ label {
+	color: #ffffff;
+}
+.singupform.alt .input-container input:focus ~ .bar:before, .singupform.alt .input-container input:focus ~ .bar:after {
+	background: #ffffff;
+}
+.singupform.alt .input-container input:valid ~ label {
+	color: #ffffff;
+}
+.singupform.alt .input-container label {
+	color: rgba(255, 255, 255, 0.8);
+}
+.singupform.alt .input-container .bar {
+	background: rgba(255, 255, 255, 0.8);
+}
+.singupform.alt .button-container button {
+	width: 100%;
+	background: #ffffff;
+	border-color: #ffffff;
+}
+.singupform.alt .button-container button span {
+	color: #ed2553;
+}
+.singupform.alt .button-container button:hover {
+	background: rgba(255, 255, 255, 0.9);
+}
+.singupform.alt .button-container button:active:before, .singupform.alt .button-container button:focus:before {
+	display: none;
+}
+
+
+.loginform{
+	margin-top: 25px;
+	width: 100%;
+	height: 200px;
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	background-color: white;
+}
+
+.loginform .input-container {
+	float: left;
+	position: relative;
+	margin-left: 30px;
+	margin-top: 15px;
+	margin-bottom: 20px;
+	width: 169px;
+}
+.loginform .input-container input {
+	outline: none;
+	z-index: 1;
+	position: relative;
+	background: none;
+	width: 100%;
+	height: 60px;
+	border: 0;
+	color: #212121;
+	font-size: 17px;
+	font-weight: 400;
+}
+.loginform .input-container input:focus ~ label {
+	color: #9d9d9d;
+	-webkit-transform: translate(-12%, -35%) scale(0.75);
+	transform: translate(-12%, -35%) scale(0.75);
+}
+.loginform .input-container input:focus ~ .bar:before, .loginform .input-container input:focus ~ .bar:after {
+	width: 50%;
+}
+.loginform .input-container input:valid ~ label {
+	color: #9d9d9d;
+	-webkit-transform: translate(-12%, -35%) scale(0.75);
+	transform: translate(-12%, -35%) scale(0.75);
+}
+.loginform .input-container label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: #757575;
+	font-size: 17px;
+	font-weight: 300;
+	line-height: 60px;
+	-webkit-transition: 0.2s ease;
+	transition: 0.2s ease;
+}
+.loginform .input-container .bar {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	background: #757575;
+	line-height: 20px;
+	color: #b70808;
+	font-size: 11px;
+	width: 100%;
+	height: 1px;
+}
+
+.date_error{
+	min-height: 20px;
+	line-height: 20px;
+	color: #b70808;
+	font-size: 11px;
+}
+
+.loginform .input-container .bar:before, .loginform .input-container .bar:after {
+	content: '';
+	position: absolute;
+	background: #ed2553;
+	width: 0;
+	height: 2px;
+	-webkit-transition: .2s ease;
+	transition: .2s ease;
+}
+.loginform .input-container .bar:before {
+	left: 50%;
+}
+.loginform .input-container .bar:after {
+	right: 50%;
+}
+.loginform .button-container {
+	margin: 0 30px;
+
+	text-align: center;
+}
+.loginform .button-container button {
+	margin-top: 10px;
+	outline: 0;
+	cursor: pointer;
+	position: relative;
+	display: inline-block;
+	background: 0;
+	width: 100%;
+	border: 2px solid #e3e3e3;
+	padding: 20px 0;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 1;
+	text-transform: uppercase;
+	overflow: hidden;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.loginform .button-container button span {
+	position: relative;
+	z-index: 1;
+	color: #ddd;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.loginform .button-container button:before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: block;
+	background: #ed2553;
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+	margin: -15px 0 0 -15px;
+	opacity: 0;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.loginform .button-container button:hover, .loginform .button-container button:active, .loginform .button-container button:focus {
+	border-color: #ed2553;
+}
+.loginform .button-container button:hover span, .loginform .button-container button:active span, .loginform .button-container button:focus span {
+	color: #ed2553;
+}
+.loginform .button-container button:active span, .loginform .button-container button:focus span {
+	color: #ffffff;
+}
+.loginform .button-container button:active:before, .loginform .button-container button:focus:before {
+	opacity: 1;
+	-webkit-transform: scale(10);
+	transform: scale(10);
+}
+.loginform .footer {
+	margin: 40px 0 0;
+	color: #d3d3d3;
+	font-size: 24px;
+	font-weight: 300;
+	text-align: center;
+}
+.loginform .footer a {
+	color: inherit;
+	text-decoration: none;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+}
+.loginform .footer a:hover {
+	color: #bababa;
+}
+.loginform.alt {
+	position: absolute;
+	top: 40px;
+	right: -70px;
+	z-index: 10;
+	width: 140px;
+	height: 140px;
+	background: none;
+	border-radius: 100%;
+	box-shadow: none;
+	padding: 0;
+	-webkit-transition: .3s ease;
+	transition: .3s ease;
+	/* Toggle */
+	/* Title */
+	/* Input */
+	/* Button */
+}
+.loginform.alt .toggle {
+	position: relative;
+	background: #ed2553;
+	width: 140px;
+	height: 140px;
+	border-radius: 100%;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	color: #ffffff;
+	font-size: 58px;
+	line-height: 140px;
+	text-align: center;
+	cursor: pointer;
+}
+.loginform.alt .toggle:before {
+	content: '\f040';
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-transform: translate(0, 0);
+	transform: translate(0, 0);
+}
+.loginform.alt .title,
+.loginform.alt .input-container,
+.loginform.alt .button-container {
+	left: 100px;
+	opacity: 0;
+	visibility: hidden;
+}
+.loginform.alt .title {
+	position: relative;
+	border-color: #ffffff;
+	color: #ffffff;
+}
+.loginform.alt .title .close {
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 60px;
+	display: inline;
+	color: #ffffff;
+	font-size: 58px;
+	font-weight: 400;
+}
+.loginform.alt .title .close:before {
+	content: '\00d7';
+}
+.loginform.alt .input-container input {
+	color: #ffffff;
+}
+.loginform.alt .input-container input:focus ~ label {
+	color: #ffffff;
+}
+.loginform.alt .input-container input:focus ~ .bar:before, .loginform.alt .input-container input:focus ~ .bar:after {
+	background: #ffffff;
+}
+.loginform.alt .input-container input:valid ~ label {
+	color: #ffffff;
+}
+.loginform.alt .input-container label {
+	color: rgba(255, 255, 255, 0.8);
+}
+.loginform.alt .input-container .bar {
+	background: rgba(255, 255, 255, 0.8);
+}
+.loginform.alt .button-container button {
+	width: 100%;
+	background: #ffffff;
+	border-color: #ffffff;
+}
+.loginform.alt .button-container button span {
+	color: #ed2553;
+}
+.loginform.alt .button-container button:hover {
+	background: rgba(255, 255, 255, 0.9);
+}
+.loginform.alt .button-container button:active:before, .loginform.alt .button-container button:focus:before {
+	display: none;
+}
+
+
 
 .orderform .input-container {
 	float: left;

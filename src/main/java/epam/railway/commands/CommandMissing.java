@@ -26,11 +26,11 @@ public class CommandMissing implements ICommand{
     private static final Logger log = LogManager.getLogger(CommandMissing.class.getName());
     
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
-        String page = null;
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         log.error("404. Command: " + request.getParameter(COMMAND));
         request.setAttribute(ERROR, Message.getInstance().getProperty(Message.UNEXIST_PAGE));
-        page = Config.getInstance().getProperty(Config.ERROR);
+        String page = Config.getInstance().getProperty(Config.ERROR);
         return page;
     }
 }

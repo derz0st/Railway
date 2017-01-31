@@ -58,8 +58,12 @@
 
 
 
-            <c:if test="${status == 'actual' || status == 'archive'}">
+            <c:if test="${status == 'actual'}">
                 <jsp:include page="existed_tickets.jsp" />
+            </c:if>
+
+            <c:if test="${status == 'archive'}">
+                <jsp:include page="archive_tickets.jsp" />
             </c:if>
 
             <c:if test="${status == 'new'}">

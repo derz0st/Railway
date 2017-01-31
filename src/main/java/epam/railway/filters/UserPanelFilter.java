@@ -28,12 +28,17 @@ public class UserPanelFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
 
         HttpSession session = req.getSession(false);
+        System.out.println(req);
+        System.out.println(req.getParameter("command"));
+        String command = req.getParameter("command");
 
-        if (session == null){
+        if (session.getAttribute("userentity") == null && !command.equals("signup") && !command.equals("signupaction") && !command.equals("login")){
             String page;
 
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/views/sign-in.jsp");
             dispatcher.forward(request, response);
+        } else {
+            System.out.println(session.toString() + "это какая то сессия");
         }
 
         chain.doFilter(request, response);

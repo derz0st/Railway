@@ -29,62 +29,27 @@
     </a>
 
     <div class="container">
-        
-      <div class="card"></div>
-      <div class="card">
-        <h1 class="title">Login</h1>
-        <form name="loginForm" method="POST" action="Controller?command=login">
-          <div class="input-container">
-            <input type="text" id="Email" name="email" value="${entered_email}" required="required"/>
-            <label for="Email">Email</label>
-            <div class="bar">${emailerror}</div>
-          </div>
-          <div class="input-container">
-            <input type="password" id="Password" name="password" value="${entered_password}" required="required"/>
-            <label for="Password">Password</label>
-            <div class="bar">${passworderror}</div>
-          </div>
-          <div class="button-container">
-            <button><span>Go</span></button>
-          </div>
-        </form>
-      </div>
-      <div class="card alt">
-        <div class="toggle"></div>
-        <h1 class="title">Register
-          <div class="close"></div>
-        </h1>
-        <form name="addSellerForm" method="POST" action="Controller?command=signup">
-          <div class="input-container"> 
-            <input type="text" id="Name" name="firstname" required="required"/>
-            <label for="Name">First Name</label>
-            <div class="bar"></div>
-          </div>
-          <div class="input-container"> 
-            <input type="text" id="LastName" name="lastname" required="required"/>
-            <label for="LastName">Last Name</label>
-            <div class="bar"></div>
-          </div>
-          <div class="input-container"> 
-            <input type="text" id="Username" name="email" required="required"/>
-            <label for="Username">Email</label>
-            <div class="bar"></div>
-          </div>
-          <div class="input-container">
-            <input type="password" id="Password" name="password" required="required"/>
-            <label for="Password">Password</label>
-            <div class="bar"></div>
-          </div>
-          <div class="input-container">
-            <input type="password" id="Repeat Password" name="repeatpassword" required="required"/>
-            <label for="Repeat Password">Repeat Password</label>
-            <div class="bar"></div>
-          </div>
-          <div class="button-container">
-            <button><span>Next</span></button>
-          </div>
-        </form>
-      </div>
+
+
+      <form class="loginform" method="POST" action="Controller?command=login">
+        <div class="input-container">
+          <input type="text" id="Email" name="email" value="${entered_email}" required="required"/>
+          <label for="Email">Email</label>
+          <div class="bar">${emailerror}</div>
+        </div>
+        <div class="input-container">
+          <input type="password" id="Password" name="password" value="${entered_password}" required="required"/>
+          <label for="Password">Password</label>
+          <div class="bar">${passworderror}</div>
+        </div>
+
+        <div class="button-container">
+          <button><span>Sign in</span></button>
+        </div>
+      </form>
+
+        <div class="redirect_sign_in"> <a href="Controller?command=signup"> Not yet registered? | Sign up</a> </div>
+
     </div>
 
       <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

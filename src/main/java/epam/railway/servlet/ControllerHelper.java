@@ -6,6 +6,9 @@
 package epam.railway.servlet;
 
 import epam.railway.commands.*;
+import epam.railway.commands.ticket.*;
+import epam.railway.commands.train.CommandOrder;
+import epam.railway.commands.user.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -23,6 +26,8 @@ public class ControllerHelper {
         commands.put("findtickets", new CommandFindTickets());
         commands.put("login", new CommandLogin());
         commands.put("signup", new CommandSignUp());
+        commands.put("signin", new CommandSignIn());
+        commands.put("signupaction", new CommandSignUpAction());
         commands.put("pay", new CommandPay());
         commands.put("buyticket", new CommandBuyTicket());
         commands.put("usertickets", new CommandUserTickets());
@@ -32,7 +37,6 @@ public class ControllerHelper {
         commands.put("blockuser", new CommandBlockUser());
         commands.put("settings", new CommandSettings());
         commands.put("settingssave", new CommandSettingsSave());
-        commands.put("ordertest", new CommandOrderTest());
         commands.put("shoppingcart", new CommandShoppingCart());
         commands.put("customertickets", new CommandGetCustomerTickets());
         commands.put("returnticket", new CommandReturnTicket());
