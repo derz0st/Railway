@@ -4,14 +4,17 @@ import epam.railway.dao.interfaces.DaoStationInterface;
 import epam.railway.entities.Station;
 import epam.railway.manager.connectionpool.neo4j.Neo4jConnection;
 import epam.railway.manager.connectionpool.neo4j.Neo4jConnectionPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by denis on 30.12.16.
@@ -19,7 +22,8 @@ import java.util.logging.Logger;
 public class DaoStation implements DaoStationInterface{
 
     private static DaoStation instance;
-    private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss DD");
+    private static final Logger commandLogger = LogManager.getLogger(DaoStation.class);
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss DD");
     private static final String FIND_STATIONS_BY_TRAIN_ID = "match (n)-[rel: GOES {trainnumber: {1}}]->(m)\n"
             + "return distinct n.name as name, m.name as arname, rel.order, rel.departure, \n"
             + "rel.trainnumber, rel.arrival, rel.price\n" +
@@ -36,46 +40,43 @@ public class DaoStation implements DaoStationInterface{
 
     @Override
     public List<Station> findByTrainNumber(Integer trainNumber) {
-        List<Station> stationlist = null;
+        List<Station> stationList = null;
         try (Neo4jConnection con = Neo4jConnectionPool.getInstance().getConnection()){
 
-            //Connection con = Neo4jConnectionPool.getInstance().retrieve();
             String query = FIND_STATIONS_BY_TRAIN_ID;
+            try (PreparedStatement stmt = con.prepareStatement(query)){
 
-            PreparedStatement stmt = con.prepareStatement(query);
-            stmt = con.prepareStatement(query);
             stmt.setInt(1, trainNumber);
             ResultSet rs2 = stmt.executeQuery();
-            stationlist = new ArrayList<>();
-            Station next;
+            stationList = new ArrayList<>();
 
-            while(rs2.next()){
-                if(stationlist.size() > 0){
-                    Station prev = stationlist.get(stationlist.size()-1);
-                    prev.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
-                    prev.setPriceToNext(rs2.getDouble("rel.price"));
-                    prev.setTrainNumber(rs2.getInt("rel.trainnumber"));
-                }else{
-                    Station station = new Station();
-                    station.setName(rs2.getString("name"));
-                    station.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
-                    station.setArrivalTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
-                    station.setPriceToNext(rs2.getDouble("rel.price"));
-                    station.setTrainNumber(rs2.getInt("rel.trainnumber"));
-                    stationlist.add(station);
-                }
+                while(rs2.next()){
+                    if(stationList.size() > 0){
+                        Station prev = stationList.get(stationList.size()-1);
+                        prev.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
+                        prev.setPriceToNext(rs2.getDouble("rel.price"));
+                        prev.setTrainNumber(rs2.getInt("rel.trainnumber"));
+                    }else{
+                        Station station = new Station();
+                        station.setName(rs2.getString("name"));
+                        station.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
+                        station.setArrivalTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
+                        station.setPriceToNext(rs2.getDouble("rel.price"));
+                        station.setTrainNumber(rs2.getInt("rel.trainnumber"));
+                        stationList.add(station);
+                    }
                     Station station = new Station();
                     station.setName(rs2.getString("arname"));
                     station.setArrivalTime(new Timestamp(formatter.parse(rs2.getString("rel.arrival")).getTime()));
                     station.setPriceToNext(0.0);
-                    stationlist.add(station);
+                    stationList.add(station);
                 }
+            }
+        } catch (SQLException | ParseException ex) {
 
-        } catch (/*InstantiationException | IllegalAccessException | ClassNotFoundException |*/ SQLException | ParseException ex) {
-            Logger.getLogger(DaoTrainNeo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
-            e.printStackTrace();
+            commandLogger.error("Find stations error: " + e.getMessage());
         }
-        return stationlist;
+        return stationList;
     }
 }

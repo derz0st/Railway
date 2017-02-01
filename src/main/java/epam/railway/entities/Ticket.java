@@ -8,11 +8,8 @@ package epam.railway.entities;
 import java.sql.Timestamp;
 
 /**
- *
- * @author denis
+ * Ticket entity class
  */
-
-
 public class Ticket {
 
     private Integer id;

@@ -21,7 +21,7 @@
 
     <filter>
         <filter-name>UserPanelFilter</filter-name>
-        <filter-class>epam.railway.filters.UserPanelFilter</filter-class>
+        <filter-class>epam.railway.filters.SessionFilter</filter-class>
     </filter>
 
     <filter-mapping>

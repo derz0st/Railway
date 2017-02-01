@@ -5,7 +5,7 @@
  */
 package epam.railway.dao.interfaces;
 
-import epam.railway.entities.TrainNeo;
+import epam.railway.entities.Train;
 
 import java.util.List;
 
@@ -14,5 +14,19 @@ import java.util.List;
  * @author denis
  */
 public interface DaoTrainNeoInterface {
-    List<TrainNeo> findByDeparturecityAndDestinationcity(String departureCity, String destinationCity);
+
+    /**
+     * Finds all trains that travel between two cities
+     * @param departureCity a city from which the train departs
+     * @param destinationCity a city in which the train arrives
+     * @return trains that travel between two cities
+     */
+    List<Train> findByDeparturecityAndDestinationcity(String departureCity, String destinationCity);
+
+    /**
+     * Finds ids of all trains
+     * @return id list of all trains in database
+     */
+    List<Integer> getAllTrainNumbers();
+
 }

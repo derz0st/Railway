@@ -15,7 +15,9 @@ public class CommandShoppingCart implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+
         String page = Config.getInstance().getProperty(Config.PAY_TICKET);
         return page;
+
     }
 }

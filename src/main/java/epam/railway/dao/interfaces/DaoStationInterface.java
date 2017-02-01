@@ -16,4 +16,5 @@ public interface DaoStationInterface {
      * @return an ordered stations list through which the train goes
      */
     List<Station> findByTrainNumber(Integer trainNumber);
+
 }

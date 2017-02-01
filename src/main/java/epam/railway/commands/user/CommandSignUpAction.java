@@ -20,6 +20,7 @@ import java.io.IOException;
  * @author denis
  */
 public class CommandSignUpAction implements ICommand {
+
     private static final String FIRST_NAME = "firstname";
     private static final String LAST_NAME = "lastname";
     private static final String EMAIL = "email";
@@ -37,11 +38,13 @@ public class CommandSignUpAction implements ICommand {
             ENTERED_PASSWORD = "entered_password",
             ENTERED_FIRSTNAME = "entered_firstname",
             ENTERED_LASTNAME = "entered_lastname",
-            ENTERED_REPEAT_PASSWORD = "entered_repeat_password";
+            ENTERED_REPEAT_PASSWORD = "entered_repeat_password",
+            PASSWORDS_NOT_EQUALS = "• passwords not equals";
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
-        String page = null;
+
+        String page;
         String firstname = request.getParameter(FIRST_NAME);
         String lastname = request.getParameter(LAST_NAME);
         String email = request.getParameter(EMAIL);     
@@ -85,8 +88,8 @@ public class CommandSignUpAction implements ICommand {
                 request.setAttribute(EMAIL_ERROR, INCORRECT_EMAIL);
             }
         } else {
-            request.setAttribute(REPEAT_PASSWORS_ERROR, "• passwords not equals");
-            request.setAttribute(PASSWORD_ERROR, "• passwords not equals");
+            request.setAttribute(REPEAT_PASSWORS_ERROR, PASSWORDS_NOT_EQUALS);
+            request.setAttribute(PASSWORD_ERROR, PASSWORDS_NOT_EQUALS);
         }
         return page;
     }

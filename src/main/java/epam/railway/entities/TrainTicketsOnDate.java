@@ -3,7 +3,7 @@ package epam.railway.entities;
 import java.sql.Timestamp;
 
 /**
- * Created by denis on 29.12.16.
+ * TrainTicketsOnDate entity class
  */
 public class TrainTicketsOnDate {
 

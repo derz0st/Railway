@@ -2,7 +2,7 @@ package epam.railway.service;
 
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.entities.Station;
-import epam.railway.entities.TrainNeo;
+import epam.railway.entities.Train;
 import epam.railway.entities.TrainTicketsOnDate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,19 +30,20 @@ public class TrainSevice {
     }
 
 
-    public List<TrainNeo> findByDeparturecityAndDestinationcity(String departureCity, String destinationCity, Timestamp date){
-        List<TrainNeo> trains = DaoFactory.getDaoTrainNeo().findByDeparturecityAndDestinationcity(departureCity, destinationCity);
-        List<TrainNeo> actualTrains = new ArrayList<>();
+    public List<Train> findByDeparturecityAndDestinationcity(String departureCity, String destinationCity, Timestamp date){
+        List<Train> trains = DaoFactory.getDaoTrainNeo().findByDeparturecityAndDestinationcity(departureCity, destinationCity);
+        List<Train> actualTrains = new ArrayList<>();
         List<Station> stationList;
 
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date.getTime());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         Timestamp dateWithoutTime = new Timestamp(calendar.getTimeInMillis());
 
-        for (TrainNeo train: trains) {
+        for (Train train: trains) {
 
             TrainTicketsOnDate trainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate().findByTrainNumberAndDate(train.getId(), dateWithoutTime);
 
@@ -99,10 +100,10 @@ public class TrainSevice {
         return actualTrains;
     }
 
-    public TrainNeo findByTrainNumber(Integer trainNumber, String departureCity, String destinationCity, Timestamp date){
-        TrainNeo train = new TrainNeo();
+    public Train findByTrainNumber(Integer trainNumber, String departureCity, String destinationCity, Timestamp date){
+        Train train = new Train();
         TrainTicketsOnDate trainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate().findByTrainNumberAndDate(trainNumber, date);
-        System.out.println(trainTicketsOnDate + " это тикеты на дату по поезду");
+
         if (trainTicketsOnDate != null) {
 
             train.setNumber(trainNumber);

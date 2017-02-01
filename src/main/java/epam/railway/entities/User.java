@@ -5,30 +5,19 @@
  */
 package epam.railway.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- *
- * @author denis
+ * User entity class
  */
-@Table(name = "User")
 public class User implements Serializable {
-    @Column(name = "id")
-    @Id
+
     private Integer id;
-    @Column(name = "adminid")
     private Integer adminid;
-    @Column(name = "firstname")
     private String firstname;
-    @Column(name = "lastname")
     private String lastname;
-    @Column(name = "email")
     private String email;
-    @Column(name = "password")
     private String password;
     private Integer isBlocked;
 

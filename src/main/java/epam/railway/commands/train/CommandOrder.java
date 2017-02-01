@@ -70,12 +70,10 @@ public class CommandOrder implements ICommand {
                 Calendar today = Calendar.getInstance();
 
                 // Spare time for enter data
-                today.roll(Calendar.MINUTE, -2);
+                today.roll(Calendar.MINUTE, -1);
                 Timestamp currentDay = new Timestamp(today.getTimeInMillis());
 
-                if(travelDate.after(new Timestamp(currentDay.getTime()))) {
-                    System.out.println(travelDate);
-                    System.out.println(currentDay);
+                if(travelDate.after(currentDay)) {
 
                     List list = TrainSevice.getInstance().findByDeparturecityAndDestinationcity(departureCity, destinationCity, travelDate);
 

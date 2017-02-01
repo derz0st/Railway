@@ -15,10 +15,7 @@ public class CommandSignUp implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
-        String page = null;
 
-        page = Config.getInstance().getProperty(Config.SIGN_UP);
-
-        return page;
+        return Config.getInstance().getProperty(Config.SIGN_UP);
     }
 }

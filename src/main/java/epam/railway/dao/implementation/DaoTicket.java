@@ -23,7 +23,7 @@ import java.util.List;
 public class DaoTicket implements DaoTicketInterface{
     
     private static DaoTicket instance;
-    private static final Logger log = LogManager.getLogger(DaoTicket.class.getName());
+    private static final Logger commandLogger = LogManager.getLogger(DaoStation.class);
     private static final String QUERY_ADD_TICKET =
             "INSERT INTO tiket_test (user_id, user_name, user_last_name, start_date_time, end_date_time, price," +
                     "train_number, departure_city, destination_city) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -54,40 +54,31 @@ public class DaoTicket implements DaoTicketInterface{
     @Override
     public void addTicket(Ticket ticket) {
 
-        try (Connection connection = ConnectionPool.createConnection()) {
-            PreparedStatement preparedStatement = null;
-            
-            try {    
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(QUERY_ADD_TICKET)) {
 
-                preparedStatement = connection.prepareStatement(QUERY_ADD_TICKET);
-                preparedStatement.setInt(1, ticket.getUserid());
-                preparedStatement.setString(2, ticket.getUserName());
-                preparedStatement.setString(3, ticket.getUserLastName());
-                preparedStatement.setTimestamp(4, ticket.getStartDateTime());
-                preparedStatement.setTimestamp(5, ticket.getEndDateTime());
-                preparedStatement.setDouble(6, ticket.getPrice());
-                preparedStatement.setInt(7, ticket.getTrainNumber());
-                preparedStatement.setString(8, ticket.getDepartureCity());
-                preparedStatement.setString(9, ticket.getDestinationCity());
-                preparedStatement.executeUpdate();
-                
-            } finally {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            }
+            preparedStatement.setInt(1, ticket.getUserid());
+            preparedStatement.setString(2, ticket.getUserName());
+            preparedStatement.setString(3, ticket.getUserLastName());
+            preparedStatement.setTimestamp(4, ticket.getStartDateTime());
+            preparedStatement.setTimestamp(5, ticket.getEndDateTime());
+            preparedStatement.setDouble(6, ticket.getPrice());
+            preparedStatement.setInt(7, ticket.getTrainNumber());
+            preparedStatement.setString(8, ticket.getDepartureCity());
+            preparedStatement.setString(9, ticket.getDestinationCity());
+            preparedStatement.executeUpdate();
             
         } catch (NamingException | SQLException ex) {
-            System.out.println("Ошибка в добавлении билета" + ex.getMessage());
-            ex.printStackTrace();
+            commandLogger.error("Add ticket error: " + ex.getMessage());
         }
     }
 
+
+    @Override
     public Ticket findByTicketid(Integer ticketId) {
 
         Ticket ticket = null;
         String query = QUERY_SELECT_BY_TICKET_ID;
-
 
         try (Connection connection = ConnectionPool.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -114,11 +105,13 @@ public class DaoTicket implements DaoTicketInterface{
                 }
             }
         } catch (NamingException | SQLException ex) {
-            System.out.println("Ошибка");
+            commandLogger.error("Find ticket error: " + ex.getMessage());
         }
         return ticket;
     }
 
+
+    @Override
     public List<Ticket> findByUserid(Integer userId, Boolean actual) {
 
         List<Ticket> list = new ArrayList();
@@ -161,89 +154,74 @@ public class DaoTicket implements DaoTicketInterface{
                 }
             }
         } catch (NamingException | SQLException ex) {
-            System.out.println("Ошибка");
+            commandLogger.error("Find ticket error: " + ex.getMessage());
         }
         return list;
     }
 
+
+    @Override
     public List<Ticket> findByReturnStatus() {
 
         List<Ticket> list = new ArrayList();
         String query = QUERY_SELECT_ALL_TICKETS_BY_RETURN_STATUS;
 
         try (Connection connection = ConnectionPool.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                Ticket ticket;
-                while(resultSet.next()){
-                    ticket = new Ticket();
-                    ticket.setId(resultSet.getInt("id"));
-                    ticket.setUserid(resultSet.getInt("user_id"));
-                    ticket.setUserName(resultSet.getString("user_name"));
-                    ticket.setUserLastName(resultSet.getString("user_last_name"));
-                    ticket.setStartDateTime(resultSet.getTimestamp("start_date_time"));
-                    ticket.setEndDateTime(resultSet.getTimestamp("end_date_time"));
-                    ticket.setPrice(resultSet.getDouble("price"));
-                    ticket.setTrainNumber(resultSet.getInt("train_number"));
-                    ticket.setDepartureCity(resultSet.getString("departure_city"));
-                    ticket.setDestinationCity(resultSet.getString("destination_city"));
-                    ticket.setReturnStatus(resultSet.getInt("return_status"));
+            Ticket ticket;
+            while(resultSet.next()){
+                ticket = new Ticket();
+                ticket.setId(resultSet.getInt("id"));
+                ticket.setUserid(resultSet.getInt("user_id"));
+                ticket.setUserName(resultSet.getString("user_name"));
+                ticket.setUserLastName(resultSet.getString("user_last_name"));
+                ticket.setStartDateTime(resultSet.getTimestamp("start_date_time"));
+                ticket.setEndDateTime(resultSet.getTimestamp("end_date_time"));
+                ticket.setPrice(resultSet.getDouble("price"));
+                ticket.setTrainNumber(resultSet.getInt("train_number"));
+                ticket.setDepartureCity(resultSet.getString("departure_city"));
+                ticket.setDestinationCity(resultSet.getString("destination_city"));
+                ticket.setReturnStatus(resultSet.getInt("return_status"));
 
-                    list.add(ticket);
-                }
+                list.add(ticket);
             }
+
         } catch (NamingException | SQLException ex) {
-            System.out.println("Ошибка");
+            commandLogger.error("Find tickets for refund error: " + ex.getMessage());
         }
         return list;
     }
 
+
+    @Override
     public void deleteByTicketId(Integer ticketId){
-        try (Connection connection = ConnectionPool.createConnection()) {
-            PreparedStatement preparedStatement = null;
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(QUERY_DELETE_TICKET_BY_TICKET_ID)) {
 
-            try {
-
-                preparedStatement = connection.prepareStatement(QUERY_DELETE_TICKET_BY_TICKET_ID);
-                preparedStatement.setInt(1, ticketId);
-
-                preparedStatement.execute();
-
-            } finally {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            }
+            preparedStatement.setInt(1, ticketId);
+            preparedStatement.execute();
 
         } catch (NamingException | SQLException ex) {
-            System.out.println("Ошибка" + ex.getMessage());
+            commandLogger.error("Delete ticket error: " + ex.getMessage());
         }
     }
 
+
+    @Override
     public void returnByTicketId(Integer returnStatus, Integer ticketId){
-        try (Connection connection = ConnectionPool.createConnection()) {
-            PreparedStatement preparedStatement = null;
-            connection.setAutoCommit(false);
-            try {
+        try (Connection connection = ConnectionPool.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(QUERY_SET_RETURN_STATUS_BY_TICKET_ID)) {
 
-                preparedStatement = connection.prepareStatement(QUERY_SET_RETURN_STATUS_BY_TICKET_ID);
-                preparedStatement.setInt(1, returnStatus);
-                preparedStatement.setInt(2, ticketId);
+            preparedStatement.setInt(1, returnStatus);
+            preparedStatement.setInt(2, ticketId);
 
-                preparedStatement.execute();
+            preparedStatement.execute();
 
-            } finally {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            }
-            connection.commit();
         } catch (NamingException | SQLException ex) {
-            System.out.println("Ошибка" + ex.getMessage());
+            commandLogger.error("Refund ticket error: " + ex.getMessage());
         }
     }
-
-    
 
 }

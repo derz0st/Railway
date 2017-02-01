@@ -11,28 +11,9 @@
             type="javax.sql.DataSource" 
             url="jdbc:mysql://localhost:3306/railway" username="root"/>
 
-  <!-- ConnectionPool Resource for Neo4j db  -->
-  <Resource auth="Container"
-
-            driverClassName="org.neo4j.jdbc.Driver"
-            maxIdle="30" maxTotal="50" maxWaitMillis="10000"
-            name="jdbc/neo4j"
-            password="ycthssw5sn"
-            type="javax.sql.DataSource"
-            url="jdbc:neo4j:bolt://localhost:7687" username="neo4j"/>
-
-  <Resource auth="Container"
-            driverClassName="org.neo4j.jdbc.Driver"
-
-            name="jdbc/SomeJndiNameForYourNeo4jDbResource"
-            url="jdbc:neo4j:bolt://localhost"
-            type="javax.sql.DataSource"
-            username="neo4j"
-            password="neo4j"/>
 
   <Transaction
           factory="org.objectweb.jotm.UserTransactionFactory"
           jotm.timeout="60"/>
-
 
 </Context>

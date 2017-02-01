@@ -9,10 +9,10 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- *
- * @author denis
+ * Station entity class
  */
 public class Station {
+
     private Integer id;
     private String name;
     private Integer trainNumber;

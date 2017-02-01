@@ -14,11 +14,7 @@ import java.io.IOException;
 public class CommandSignIn implements ICommand {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
-        String page = null;
-
-        page = Config.getInstance().getProperty(Config.LOGIN);
-
-        return page;
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        return Config.getInstance().getProperty(Config.LOGIN);
     }
 }

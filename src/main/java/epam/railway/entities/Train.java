@@ -11,10 +11,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
- * @author denis
+ * Train entity class
  */
-public class TrainNeo {
+public class Train {
 
     private Integer id;
     private Integer number;
@@ -128,7 +127,7 @@ public class TrainNeo {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TrainNeo other = (TrainNeo) obj;
+        final Train other = (Train) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

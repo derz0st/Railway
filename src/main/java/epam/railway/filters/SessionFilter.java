@@ -5,6 +5,8 @@
  */
 package epam.railway.filters;
 
+import epam.railway.manager.Config;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,9 +15,14 @@ import javax.servlet.http.HttpSession;
  *
  * @author denis
  */
-public class UserPanelFilter implements Filter {
+public class SessionFilter implements Filter {
 
     private FilterConfig filterConfig;
+    private static final String COMMAND = "command",
+            USER_ENTITY = "userentity",
+            SIGN_UP = "signup",
+            SIGN_UP_ACTION = "signupaction",
+            LOGIN = "login";
 
     @Override
     public void init(final FilterConfig filterConfig) {
@@ -28,17 +35,14 @@ public class UserPanelFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
 
         HttpSession session = req.getSession(false);
-        System.out.println(req);
-        System.out.println(req.getParameter("command"));
-        String command = req.getParameter("command");
+        String command = req.getParameter(COMMAND);
 
-        if (session.getAttribute("userentity") == null && !command.equals("signup") && !command.equals("signupaction") && !command.equals("login")){
-            String page;
-
-            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/views/sign-in.jsp");
+        if (session == null) {
+            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(Config.getInstance().getProperty(Config.LOGIN));
             dispatcher.forward(request, response);
-        } else {
-            System.out.println(session.toString() + "это какая то сессия");
+        } else if (session.getAttribute(USER_ENTITY) == null && !command.equals(SIGN_UP) && !command.equals(SIGN_UP_ACTION) && !command.equals(LOGIN)) {
+            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(Config.getInstance().getProperty(Config.LOGIN));
+            dispatcher.forward(request, response);
         }
 
         chain.doFilter(request, response);
