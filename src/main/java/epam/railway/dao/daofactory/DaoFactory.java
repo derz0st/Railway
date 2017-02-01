@@ -6,6 +6,7 @@
 package epam.railway.dao.daofactory;
 
 import epam.railway.dao.implementation.*;
+import epam.railway.dao.interfaces.*;
 
 /**
  *
@@ -13,23 +14,23 @@ import epam.railway.dao.implementation.*;
  */
 public class DaoFactory {
     
-    public static DaoUser getDaoUser(){
+    public static DaoUserInterface getDaoUser(){
         return DaoUser.getInstance();
     }
 
-    public static DaoStation getDaoStation(){
+    public static DaoStationInterface getDaoStation(){
         return DaoStation.getInstance();
     }
     
-    public static DaoTicket getDaoTicket(){
+    public static DaoTicketInterface getDaoTicket(){
         return DaoTicket.getInstance();
     }
     
-    public static DaoTrainNeo getDaoTrainNeo(){
-        return DaoTrainNeo.getInstance();
+    public static DaoTrainInterface getDaoTrainNeo(){
+        return DaoTrain.getInstance();
     }
 
-    public static DaoTrainTicketsOnDate getDaoTrainTicketsOnDate(){
+    public static DaoTrainTicketsOnDateInterface getDaoTrainTicketsOnDate(){
         return DaoTrainTicketsOnDate.getInstance();
     }
     

@@ -35,7 +35,6 @@ public class SessionListener implements HttpSessionListener {
 
             timestamp = new Timestamp(cropTime.getTimeInMillis());
             DaoFactory.getDaoTrainTicketsOnDate().descBusySeatsByTrainNumberAndDate(ticket.getTrainNumber(), timestamp);
-            System.out.println("-1 для " + ticket.getTrainNumber() + " на дату: " + timestamp);
         }
 
     }

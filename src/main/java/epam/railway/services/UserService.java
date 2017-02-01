@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package epam.railway.service;
+package epam.railway.services;
 
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.dao.interfaces.DaoUserInterface;
@@ -57,21 +57,7 @@ public class UserService {
     public void updateUser(User user){
         daoUser.update(user);
     }
-    
-//    public static void deleteUser(final Integer userId, final Integer adminId) {
-//
-//        User admin = DaoFactory.getDaoUser().findById(adminId);
-//
-//        if (admin.getAdminid().equals(1)){
-//            log.info("Admin [id: " + admin.getAdminid() +  "] remove user [id" + userId + "]");
-//            DaoFactory.getDaoUser().deleteById(userId);
-//        } else {
-//            log.error("NotAdmin user [id: " + admin.getAdminid() +  "] tried to remove user [id" + userId + "]");
-//            throw new SecurityException(Message.getInstance().getProperty(Message.PERMISSION_DENIED));
-//        }
-//
-//    }
-    
+
     public List<User> findNotAdminUsers() {
             List<User> users = daoUser.findAllNotAdmin();
             return users;

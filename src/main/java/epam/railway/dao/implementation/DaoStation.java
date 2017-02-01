@@ -73,9 +73,7 @@ public class DaoStation implements DaoStationInterface{
                 }
             }
         } catch (SQLException | ParseException ex) {
-
-        } catch (Exception e) {
-            commandLogger.error("Find stations error: " + e.getMessage());
+            commandLogger.error("Find stations error: " + ex.getMessage());
         }
         return stationList;
     }

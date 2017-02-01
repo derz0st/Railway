@@ -210,7 +210,7 @@ public class DaoTicket implements DaoTicketInterface{
 
 
     @Override
-    public void returnByTicketId(Integer returnStatus, Integer ticketId){
+    public boolean returnByTicketId(Integer returnStatus, Integer ticketId){
         try (Connection connection = ConnectionPool.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(QUERY_SET_RETURN_STATUS_BY_TICKET_ID)) {
 
@@ -218,10 +218,11 @@ public class DaoTicket implements DaoTicketInterface{
             preparedStatement.setInt(2, ticketId);
 
             preparedStatement.execute();
-
+            return true;
         } catch (NamingException | SQLException ex) {
             commandLogger.error("Refund ticket error: " + ex.getMessage());
         }
+        return false;
     }
 
 }

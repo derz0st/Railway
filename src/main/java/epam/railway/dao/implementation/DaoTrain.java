@@ -5,7 +5,7 @@
  */
 package epam.railway.dao.implementation;
 
-import epam.railway.dao.interfaces.DaoTrainNeoInterface;
+import epam.railway.dao.interfaces.DaoTrainInterface;
 import epam.railway.entities.Train;
 import epam.railway.manager.connectionpool.neo4j.Neo4jConnection;
 import epam.railway.manager.connectionpool.neo4j.Neo4jConnectionPool;
@@ -23,10 +23,10 @@ import java.util.List;
  *
  * @author denis
  */
-public class DaoTrainNeo implements DaoTrainNeoInterface{
+public class DaoTrain implements DaoTrainInterface {
 
-    private static DaoTrainNeo instance;
-    private static final Logger commandLogger = LogManager.getLogger(DaoTrainNeo.class);
+    private static DaoTrain instance;
+    private static final Logger commandLogger = LogManager.getLogger(DaoTrain.class);
     private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
     private static final String FIND_TRAINS_BETWEEN_STATIONS = 
@@ -34,11 +34,11 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
                 + "return distinct g[0].trainnumber as trainnumber";
     private static final String FIND_ALL_TRAIN_NUMBERS = "MATCH ()-[d: GOES]->() RETURN DISTINCT d.trainnumber";
     
-    private DaoTrainNeo(){}
+    private DaoTrain(){}
     
-    public static DaoTrainNeo getInstance() {
+    public static DaoTrain getInstance() {
         if (instance == null) {
-            instance = new DaoTrainNeo();
+            instance = new DaoTrain();
         }
         return instance;
     }
@@ -68,7 +68,6 @@ public class DaoTrainNeo implements DaoTrainNeoInterface{
 
                         trainList.add(train);
 
-                        System.out.print(train.getStations());
                     }
                 }
             }

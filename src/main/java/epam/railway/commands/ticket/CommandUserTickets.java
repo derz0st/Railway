@@ -9,7 +9,7 @@ import epam.railway.commands.ICommand;
 import epam.railway.entities.Ticket;
 import epam.railway.entities.User;
 import epam.railway.manager.Config;
-import epam.railway.service.TicketService;
+import epam.railway.services.TicketService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -6,10 +6,16 @@
 package epam.railway.servlet;
 
 import epam.railway.commands.ICommand;
+import epam.railway.manager.Config;
+import epam.railway.manager.Message;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -18,7 +24,9 @@ import java.io.IOException;
  */
 public class Controller extends HttpServlet {
 
+    private static final Logger servletLogger = LogManager.getLogger(Controller.class);
     private ControllerHelper controllerHelper = ControllerHelper.getInstance();
+    private static final String ERROR = "error";
 
     public Controller() {
         super();
@@ -34,27 +42,24 @@ public class Controller extends HttpServlet {
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String page = null;
+        String page;
         try {
             ICommand command = controllerHelper.getCommand(request);
             page = command.execute(request, response);
             
         } catch (ServletException e) {
-            //request.setAttribute("messageError", Message.getInstance().getProperty(Message.SERVLET_EXECPTION));
-            //log.error(e.getMessage());
-            //page = Config.getInstance().getProperty(Config.ERROR);
-            System.out.println("Ошибка в сервлете");
+            servletLogger.error(Message.getInstance().getProperty(Message.SERVLET_EXECPTION));
+            request.setAttribute(ERROR, Message.getInstance().getProperty(Message.SERVLET_EXECPTION));
+            page = Config.getInstance().getProperty(Config.ERROR);
         } catch (IOException e) {
-            //request.setAttribute("messageError", Message.getInstance().getProperty(Message.IO_EXCEPTION));
-            //log.error(e.getMessage());
-            //page = Config.getInstance().getProperty(Config.ERROR);
-            System.out.println("Ошибка в сервлете");
+            servletLogger.error(Message.getInstance().getProperty(Message.IO_EXCEPTION));
+            request.setAttribute(ERROR, Message.getInstance().getProperty(Message.IO_EXCEPTION));
+            page = Config.getInstance().getProperty(Config.ERROR);
         }
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

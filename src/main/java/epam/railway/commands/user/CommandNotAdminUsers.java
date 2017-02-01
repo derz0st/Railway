@@ -9,7 +9,7 @@ import epam.railway.commands.ICommand;
 import epam.railway.entities.User;
 import epam.railway.manager.Config;
 import epam.railway.manager.Message;
-import epam.railway.service.UserService;
+import epam.railway.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

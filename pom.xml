@@ -13,7 +13,7 @@
         <log4j.api.version>2.4.1</log4j.api.version>
         <log4j.core.version>2.4.1</log4j.core.version>
         <jstl.version>1.2</jstl.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
 
@@ -32,7 +32,23 @@
             <artifactId>javax.resource-api</artifactId>
             <version>1.7</version>
         </dependency>
-    
+
+        <!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+
+
+        <!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -101,9 +117,8 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.8</version>
-            <scope>test</scope>
+            <artifactId>mockito-core</artifactId>
+            <version>2.5.5</version>
         </dependency>
 
 

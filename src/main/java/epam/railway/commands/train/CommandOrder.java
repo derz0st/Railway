@@ -8,7 +8,7 @@ package epam.railway.commands.train;
 import epam.railway.commands.ICommand;
 import epam.railway.manager.Config;
 import epam.railway.manager.Message;
-import epam.railway.service.TrainSevice;
+import epam.railway.services.TrainSevice;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

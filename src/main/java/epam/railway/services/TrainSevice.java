@@ -1,6 +1,9 @@
-package epam.railway.service;
+package epam.railway.services;
 
 import epam.railway.dao.daofactory.DaoFactory;
+import epam.railway.dao.interfaces.DaoStationInterface;
+import epam.railway.dao.interfaces.DaoTrainInterface;
+import epam.railway.dao.interfaces.DaoTrainTicketsOnDateInterface;
 import epam.railway.entities.Station;
 import epam.railway.entities.Train;
 import epam.railway.entities.TrainTicketsOnDate;
@@ -18,6 +21,9 @@ import java.util.List;
 public class TrainSevice {
 
     private static TrainSevice instance;
+    private DaoTrainInterface daoTrain = DaoFactory.getDaoTrainNeo();
+    private DaoStationInterface daoStation = DaoFactory.getDaoStation();
+    private DaoTrainTicketsOnDateInterface daoTicketsOnTrain = DaoFactory.getDaoTrainTicketsOnDate();
     private static final Logger log = LogManager.getLogger(TrainSevice.class.getName());
 
     private TrainSevice(){}
@@ -31,7 +37,8 @@ public class TrainSevice {
 
 
     public List<Train> findByDeparturecityAndDestinationcity(String departureCity, String destinationCity, Timestamp date){
-        List<Train> trains = DaoFactory.getDaoTrainNeo().findByDeparturecityAndDestinationcity(departureCity, destinationCity);
+
+        List<Train> trains = daoTrain.findByDeparturecityAndDestinationcity(departureCity, destinationCity);
         List<Train> actualTrains = new ArrayList<>();
         List<Station> stationList;
 
@@ -45,13 +52,13 @@ public class TrainSevice {
 
         for (Train train: trains) {
 
-            TrainTicketsOnDate trainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate().findByTrainNumberAndDate(train.getId(), dateWithoutTime);
+            TrainTicketsOnDate trainTicketsOnDate = daoTicketsOnTrain.findByTrainNumberAndDate(train.getId(), dateWithoutTime);
 
             if(trainTicketsOnDate != null && trainTicketsOnDate.getBusySeats() < trainTicketsOnDate.getTotalSeats() ) {
 
                 Integer departureSt = 0, destinationSt = 0;
 
-                stationList = DaoFactory.getDaoStation().findByTrainNumber(train.getNumber());
+                stationList = daoStation.findByTrainNumber(train.getNumber());
                 train.setStations(stationList);
 
 
@@ -88,9 +95,6 @@ public class TrainSevice {
 
                 calendarTrain.set(0, 0, 0);
 
-
-
-
                 if (calendarTrain.after(calendarCurrent)) {
                     actualTrains.add(train);
                 }
@@ -100,49 +104,4 @@ public class TrainSevice {
         return actualTrains;
     }
 
-    public Train findByTrainNumber(Integer trainNumber, String departureCity, String destinationCity, Timestamp date){
-        Train train = new Train();
-        TrainTicketsOnDate trainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate().findByTrainNumberAndDate(trainNumber, date);
-
-        if (trainTicketsOnDate != null) {
-
-            train.setNumber(trainNumber);
-            train.setId(trainNumber);
-            List<Station> stationList;
-
-            Integer departureSt = 0, destinationSt = 0;
-
-            stationList = DaoFactory.getDaoStation().findByTrainNumber(trainNumber);
-            train.setStations(stationList);
-
-            for(int i = 0; i < stationList.size(); i++){
-                if(stationList.get(i).getName().equals(departureCity)){
-                    departureSt = i;
-                } else if(stationList.get(i).getName().equals(destinationCity)){
-                    destinationSt = i;
-                }
-            }
-
-            train.setDepartureTime(stationList.get(departureSt).getDepartureTime());
-            train.setDepartureCity(stationList.get(0).getName());
-            train.setArrivalTime(stationList.get(destinationSt).getArrivalTime());
-            train.setArrivalCity(stationList.get(stationList.size()-1).getName());
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(train.getArrivalTime().getTime() - train.getDepartureTime().getTime() - 97200000);
-            train.setTravelTime(calendar);
-
-            Double price = 0.0;
-
-            for(int i = departureSt; i <= destinationSt; i++){
-                price += stationList.get(i).getPriceToNext();
-            }
-
-            train.setPrice(price);
-            train.setTrainTicketsOnDate(trainTicketsOnDate);
-
-            return train;
-        } else {
-            return null;
-        }
-    }
 }

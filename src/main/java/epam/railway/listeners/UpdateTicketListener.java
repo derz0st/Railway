@@ -23,7 +23,6 @@ public class UpdateTicketListener implements ServletContextListener {
         Date tomorrow = today.getTime();
         System.out.println("Update Ticket будет запущен: " + tomorrow);
 
-        //timer.scheduleAtFixedRate(new UpdateTicketTimer(), 0, 25000);
         timer.scheduleAtFixedRate(new UpdateTicketTimer(), tomorrow, 86400000);
 
     }

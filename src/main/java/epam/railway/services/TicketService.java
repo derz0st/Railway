@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package epam.railway.service;
+package epam.railway.services;
 
 import epam.railway.dao.daofactory.DaoFactory;
 import epam.railway.dao.interfaces.DaoTicketInterface;
+import epam.railway.dao.interfaces.DaoTrainTicketsOnDateInterface;
 import epam.railway.entities.Ticket;
 import epam.railway.entities.comparators.TicketDateComparator;
 import epam.railway.manager.jotmtransaction.JotmTransaction;
@@ -27,6 +28,7 @@ import java.util.List;
 public class TicketService {
 
     private DaoTicketInterface daoTicket = DaoFactory.getDaoTicket();
+    private DaoTrainTicketsOnDateInterface daoTrainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate();
     private static TicketService instance;
     private static final Logger log = LogManager.getLogger(TicketService.class.getName());
 
@@ -44,30 +46,30 @@ public class TicketService {
     }
 
     public boolean addTicket(Ticket ticket){
-        DaoFactory.getDaoTicket().addTicket(ticket);
+        daoTicket.addTicket(ticket);
         return true;
     }
 
     public List<Ticket> getAllTicketsByUserId(Integer userId){
-        List<Ticket> userTickets = DaoFactory.getDaoTicket().findByUserid(userId, null);
+        List<Ticket> userTickets = daoTicket.findByUserid(userId, null);
         Collections.sort(userTickets, new TicketDateComparator());
         return userTickets;
     }
 
     public List<Ticket> getActualTicketsByUserId(Integer userId){
-        List<Ticket> userTickets = DaoFactory.getDaoTicket().findByUserid(userId, true);
+        List<Ticket> userTickets = daoTicket.findByUserid(userId, true);
         Collections.sort(userTickets, new TicketDateComparator());
         return userTickets;
     }
 
     public List<Ticket> getArchiveTicketsByUserId(Integer userId){
-        List<Ticket> userTickets = DaoFactory.getDaoTicket().findByUserid(userId, false);
+        List<Ticket> userTickets = daoTicket.findByUserid(userId, false);
         Collections.sort(userTickets, new TicketDateComparator());
         return userTickets;
     }
 
     public List<Ticket> getReturnTickets(){
-        List<Ticket> userTickets = DaoFactory.getDaoTicket().findByReturnStatus();
+        List<Ticket> userTickets = daoTicket.findByReturnStatus();
         Collections.sort(userTickets, new TicketDateComparator());
         return userTickets;
     }
@@ -77,7 +79,6 @@ public class TicketService {
     }
 
     public void acceptReturn(Ticket ticket) {
-
 
         UserTransaction userTransaction = null;
 
@@ -93,32 +94,29 @@ public class TicketService {
 
             userTransaction.begin();
 
-            DaoFactory.getDaoTrainTicketsOnDate().descBusySeatsByTrainNumberAndDate(ticket.getTrainNumber(), ticketDateWithoutTime);
-            DaoFactory.getDaoTicket().returnByTicketId(2, ticket.getId());
-            System.out.println("Статус транзакции: " + userTransaction.getStatus());
+            boolean descRequest = daoTrainTicketsOnDate.descBusySeatsByTrainNumberAndDate(ticket.getTrainNumber(), ticketDateWithoutTime);
+            boolean returnRequest = daoTicket.returnByTicketId(2, ticket.getId());
 
-            System.out.println("Статус транзакции 2: " + userTransaction.getStatus());
-            //это всё не работает
-            if (true){
+            if (!descRequest || !returnRequest) {
                 userTransaction.rollback();
-            }else userTransaction.commit();
-            System.out.println("Строка commit позади");
+            } else {
+                userTransaction.commit();
+            }
 
         } catch (NamingException | HeuristicRollbackException | NotSupportedException | SystemException | HeuristicMixedException | RollbackException e) {
-            System.out.println("Не получилось");
+            log.error("Refund transaction error: " + e.getMessage() + ". ticket id: " + ticket.getId());
             try {
                 userTransaction.rollback();
-            } catch (SystemException e1) {
-                System.out.println("Не получилось1");
-                e1.printStackTrace();
+            } catch (SystemException ex) {
+                log.error("Rollback error: " + ex.getMessage());
             }
             e.printStackTrace();
         }
     }
 
 
-    public static void deleteTicket(Integer ticketId) {
-        DaoFactory.getDaoTicket().deleteByTicketId(ticketId);
+    public void deleteTicket(Integer ticketId) {
+        daoTicket.deleteByTicketId(ticketId);
         log.info("Remove ticket: ticketId = " + ticketId);
     }
     

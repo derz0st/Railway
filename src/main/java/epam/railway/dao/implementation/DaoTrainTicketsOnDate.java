@@ -73,7 +73,7 @@ public class DaoTrainTicketsOnDate implements DaoTrainTicketsOnDateInterface{
                     trainTicketsOnDate.setDate(resultSet.getTimestamp("date"));
                     trainTicketsOnDate.setBusySeats(resultSet.getInt("busy_seats"));
                     trainTicketsOnDate.setTotalSeats(resultSet.getInt("total_seats"));
-                    System.out.println(trainTicketsOnDate);
+
                 }
 
             }

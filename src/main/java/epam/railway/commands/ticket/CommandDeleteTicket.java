@@ -8,7 +8,7 @@ package epam.railway.commands.ticket;
 import epam.railway.commands.ICommand;
 import epam.railway.entities.Ticket;
 import epam.railway.entities.User;
-import epam.railway.service.TicketService;
+import epam.railway.services.TicketService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,9 +26,7 @@ public class CommandDeleteTicket implements ICommand {
     private static final Logger commandLogger = LogManager.getLogger(CommandDeleteTicket.class);
     private static final String TICKET_ID = "ticketid",
             USER_ID = "userid",
-            USER_ENTITY = "userentity",
-            STATUS = "status",
-            ACTUAL = "actual";
+            USER_ENTITY = "userentity";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +41,7 @@ public class CommandDeleteTicket implements ICommand {
 
         if (ticket != null && (sessionUser.getId() == ticket.getUserid() || sessionUser.getAdminid().equals(1))) {
 
-            TicketService.deleteTicket(ticketId);
+            TicketService.getInstance().deleteTicket(ticketId);
             commandLogger.info("User id: " + sessionUser.getId() + " deleted ticket id: " + ticketId);
             String currentUser = request.getParameter(USER_ID);
 

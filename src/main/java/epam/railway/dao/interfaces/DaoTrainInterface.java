@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author denis
  */
-public interface DaoTrainNeoInterface {
+public interface DaoTrainInterface {
 
     /**
      * Finds all trains that travel between two cities

@@ -54,6 +54,6 @@ public interface DaoTicketInterface {
      * @param returnStatus status of refund: 1 - waiting for refund, 2 - refunded
      * @param ticketId id of ticket
      */
-    void returnByTicketId(Integer returnStatus, Integer ticketId);
+    boolean returnByTicketId(Integer returnStatus, Integer ticketId);
 
 }

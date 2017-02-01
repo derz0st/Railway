@@ -8,7 +8,7 @@ package epam.railway.commands.ticket;
 import epam.railway.commands.ICommand;
 import epam.railway.entities.Ticket;
 import epam.railway.manager.Config;
-import epam.railway.service.TicketService;
+import epam.railway.services.TicketService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
