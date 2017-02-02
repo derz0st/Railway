@@ -5,8 +5,7 @@ import epam.railway.entities.Station;
 import java.util.List;
 
 /**
- * Created by denis on 30.12.16.
- *
+ * Provides methods for working with stations
  */
 public interface DaoStationInterface {
 

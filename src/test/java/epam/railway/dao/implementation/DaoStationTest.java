@@ -19,12 +19,10 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by denis on 01.02.17.
+ * Unit test class for DaoStation
  */
 @PowerMockIgnore("javax.management.*")
 @RunWith(PowerMockRunner.class)

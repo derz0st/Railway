@@ -9,13 +9,13 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Timestamp;
 
 /**
- * Created by denis on 30.01.17.
+ * Service for work with train's tickets on date
  */
 public class TicketsOnDateService {
 
     private static TicketsOnDateService instance;
     private static final Logger log = LogManager.getLogger(TicketsOnDateService.class.getName());
-    private DaoTrainTicketsOnDateInterface daoTrainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate();
+    private final DaoTrainTicketsOnDateInterface daoTrainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate();
 
     private TicketsOnDateService(){}
 

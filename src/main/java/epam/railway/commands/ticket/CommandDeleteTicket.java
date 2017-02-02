@@ -39,7 +39,7 @@ public class CommandDeleteTicket implements ICommand {
         Integer ticketId = Integer.parseInt(request.getParameter(TICKET_ID));
         Ticket ticket = TicketService.getInstance().findTicketById(ticketId);
 
-        if (ticket != null && (sessionUser.getId() == ticket.getUserid() || sessionUser.getAdminid().equals(1))) {
+        if (ticket != null && (sessionUser.getId().equals(ticket.getUserid()) || sessionUser.getAdminid().equals(1))) {
 
             TicketService.getInstance().deleteTicket(ticketId);
             commandLogger.info("User id: " + sessionUser.getId() + " deleted ticket id: " + ticketId);

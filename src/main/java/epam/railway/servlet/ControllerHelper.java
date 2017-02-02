@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class ControllerHelper {
     private static ControllerHelper instance = null;
-    HashMap<String, ICommand> commands = new HashMap<>();
+    private final HashMap<String, ICommand> commands = new HashMap<>();
 
     private ControllerHelper() {
         commands.put("order", new CommandOrder());

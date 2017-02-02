@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
  */
 public class TicketDateComparatorTest {
 
-    TicketDateComparator comparator = new TicketDateComparator();
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Ticket ticket1 = new Ticket();
-    Ticket ticket2 = new Ticket();
-    Integer result;
+    private final TicketDateComparator comparator = new TicketDateComparator();
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final Ticket ticket1 = new Ticket();
+    private final Ticket ticket2 = new Ticket();
+    private Integer result;
 
     @Test
     public void compareEqualsTicketDates() throws ParseException {

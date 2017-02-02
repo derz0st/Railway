@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by denis on 30.12.16.
+ * Neo4j implementation of DaoStationInterface
  */
 public class DaoStation implements DaoStationInterface{
 
@@ -46,30 +46,33 @@ public class DaoStation implements DaoStationInterface{
             String query = FIND_STATIONS_BY_TRAIN_ID;
             try (PreparedStatement stmt = con.prepareStatement(query)){
 
-            stmt.setInt(1, trainNumber);
-            ResultSet rs2 = stmt.executeQuery();
-            stationList = new ArrayList<>();
+                stmt.setInt(1, trainNumber);
 
-                while(rs2.next()){
-                    if(stationList.size() > 0){
-                        Station prev = stationList.get(stationList.size()-1);
-                        prev.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
-                        prev.setPriceToNext(rs2.getDouble("rel.price"));
-                        prev.setTrainNumber(rs2.getInt("rel.trainnumber"));
-                    }else{
+                try (ResultSet rs2 = stmt.executeQuery()) {
+
+                    stationList = new ArrayList<>();
+
+                    while(rs2.next()){
+                        if(stationList.size() > 0){
+                            Station prev = stationList.get(stationList.size()-1);
+                            prev.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
+                            prev.setPriceToNext(rs2.getDouble("rel.price"));
+                            prev.setTrainNumber(rs2.getInt("rel.trainnumber"));
+                        }else{
+                            Station station = new Station();
+                            station.setName(rs2.getString("name"));
+                            station.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
+                            station.setArrivalTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
+                            station.setPriceToNext(rs2.getDouble("rel.price"));
+                            station.setTrainNumber(rs2.getInt("rel.trainnumber"));
+                            stationList.add(station);
+                        }
                         Station station = new Station();
-                        station.setName(rs2.getString("name"));
-                        station.setDepartureTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
-                        station.setArrivalTime(new Timestamp(formatter.parse(rs2.getString("rel.departure")).getTime()));
-                        station.setPriceToNext(rs2.getDouble("rel.price"));
-                        station.setTrainNumber(rs2.getInt("rel.trainnumber"));
+                        station.setName(rs2.getString("arname"));
+                        station.setArrivalTime(new Timestamp(formatter.parse(rs2.getString("rel.arrival")).getTime()));
+                        station.setPriceToNext(0.0);
                         stationList.add(station);
                     }
-                    Station station = new Station();
-                    station.setName(rs2.getString("arname"));
-                    station.setArrivalTime(new Timestamp(formatter.parse(rs2.getString("rel.arrival")).getTime()));
-                    station.setPriceToNext(0.0);
-                    stationList.add(station);
                 }
             }
         } catch (SQLException | ParseException ex) {

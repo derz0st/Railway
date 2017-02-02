@@ -9,15 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by denis on 02.01.17.
+ * Command for display user's shopping cart
  */
 public class CommandShoppingCart implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
 
-        String page = Config.getInstance().getProperty(Config.PAY_TICKET);
-        return page;
+        return Config.getInstance().getProperty(Config.PAY_TICKET);
 
     }
 }

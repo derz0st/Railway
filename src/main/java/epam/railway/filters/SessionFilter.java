@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionFilter implements Filter {
 
-    private FilterConfig filterConfig;
+    FilterConfig filterConfig;
+
     private static final String COMMAND = "command",
             USER_ENTITY = "userentity",
             SIGN_UP = "signup",

@@ -10,7 +10,7 @@ import javax.naming.NamingException;
 import java.sql.*;
 
 /**
- * Created by denis on 29.12.16.
+ * MySQL implementation of DaoTrainTicketsOnDateInterface
  */
 public class DaoTrainTicketsOnDate implements DaoTrainTicketsOnDateInterface{
 

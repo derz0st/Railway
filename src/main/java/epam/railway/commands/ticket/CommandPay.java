@@ -66,9 +66,9 @@ public class CommandPay implements ICommand {
             Double price = Double.valueOf(request.getParameter(PRICE));
 
             // get departure date
-            Date parsedDepartureTime = null;
-            Date parsedArrivalTime = null;
-            Date parsedDate = null;
+            Date parsedDepartureTime;
+            Date parsedArrivalTime;
+            Date parsedDate;
             try {
                 parsedDate = dateFormat.parse(request.getParameter(DATE));
                 parsedDepartureTime = timeFormat.parse(request.getParameter(DEPARTURE_TIME));

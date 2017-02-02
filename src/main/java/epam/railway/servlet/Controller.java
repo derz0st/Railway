@@ -25,7 +25,7 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     private static final Logger servletLogger = LogManager.getLogger(Controller.class);
-    private ControllerHelper controllerHelper = ControllerHelper.getInstance();
+    private final ControllerHelper controllerHelper = ControllerHelper.getInstance();
     private static final String ERROR = "error";
 
     public Controller() {

@@ -6,16 +6,15 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Neo4jConnectionPool {
 
-    private ConcurrentLinkedQueue<Neo4jConnection> сonnections = new ConcurrentLinkedQueue<>();
-    private String url = "jdbc:neo4j:bolt://localhost";
-    private String userName = "neo4j";
-    private String userPassword = "ycthssw5sn";
-    private String driver = "org.neo4j.jdbc.Driver";
+    private final ConcurrentLinkedQueue<Neo4jConnection> сonnections = new ConcurrentLinkedQueue<>();
+    private final static String url = "jdbc:neo4j:bolt://localhost";
+    private final static String userName = "neo4j";
+    private final static String userPassword = "ycthssw5sn";
+    private final static String driver = "org.neo4j.jdbc.Driver";
     private Integer initConnCnt = 6;
     private static Neo4jConnectionPool instance;
     private static final Logger log = LogManager.getLogger(DaoTicket.class.getName());
@@ -31,7 +30,7 @@ public class Neo4jConnectionPool {
         }
     }
 
-    public static Neo4jConnectionPool getInstance() {
+    public synchronized static Neo4jConnectionPool getInstance() {
         if (instance == null) {
             instance = new Neo4jConnectionPool();
         }
@@ -50,7 +49,7 @@ public class Neo4jConnectionPool {
         return new Neo4jConnection(connection);
     }
 
-    public synchronized Neo4jConnection getConnection() throws SQLException {
+    public synchronized Neo4jConnection getConnection() {
         Neo4jConnection connection;
         if (сonnections.isEmpty()) {
             connection = createConnection();

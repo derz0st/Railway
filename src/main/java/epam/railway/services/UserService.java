@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class UserService {
 
-    private DaoUserInterface daoUser = DaoFactory.getDaoUser();
+    private final DaoUserInterface daoUser = DaoFactory.getDaoUser();
     private static UserService instance;
     private static final Logger log = LogManager.getLogger(UserService.class.getName());
 
@@ -42,8 +42,7 @@ public class UserService {
     }
 
     public User findUser(final Integer userId){
-        User user = daoUser.findById(userId);
-        return user;
+        return daoUser.findById(userId);
     }
 
     public void blockUser(Integer userId){
@@ -59,8 +58,7 @@ public class UserService {
     }
 
     public List<User> findNotAdminUsers() {
-            List<User> users = daoUser.findAllNotAdmin();
-            return users;
+        return daoUser.findAllNotAdmin();
     }
     
     

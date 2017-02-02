@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class DaoTrain implements DaoTrainInterface {
 
     private static DaoTrain instance;
     private static final Logger commandLogger = LogManager.getLogger(DaoTrain.class);
-    private static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 
     private static final String FIND_TRAINS_BETWEEN_STATIONS = 
                 "MATCH (start: Station {name: {1}})-[g: GOES*]->(end: Station {name: {2}})\n"

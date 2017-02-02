@@ -11,8 +11,7 @@ import java.util.List;
 
 
 /**
- *
- * @author denis
+ * Provides methods for working with tickets
  */
 public interface DaoTicketInterface {
 

@@ -21,8 +21,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
@@ -47,23 +45,6 @@ public class DaoUserTest {
         mockConnection = Mockito.mock(Connection.class);
         mockPreparedStmnt = Mockito.mock(PreparedStatement.class);
         mockResultSet = Mockito.mock(ResultSet.class);
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-
-
-
-
-    @After
-    public void tearDown() {
     }
 
 
@@ -222,16 +203,6 @@ public class DaoUserTest {
         assertNull(userActual);
     }
 
-
-    @Test
-    public void findByEmailAndPassword() throws Exception {
-
-    }
-
-    @Test
-    public void findById() throws Exception {
-
-    }
 
     @Test
     public void addUser() throws Exception {

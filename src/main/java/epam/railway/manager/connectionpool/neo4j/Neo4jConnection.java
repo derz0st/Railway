@@ -5,11 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Created by denis on 15.01.17.
+ * Connection's wrapper for Neo4j connection pool
  */
 public class Neo4jConnection implements AutoCloseable {
 
-    private Connection connection;
+    private final Connection connection;
 
     public Neo4jConnection (Connection connection) {
         this.connection = connection;

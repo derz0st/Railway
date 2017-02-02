@@ -7,8 +7,6 @@ import epam.railway.dao.interfaces.DaoTrainTicketsOnDateInterface;
 import epam.railway.entities.Station;
 import epam.railway.entities.Train;
 import epam.railway.entities.TrainTicketsOnDate;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -16,21 +14,20 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by denis on 29.12.16.
+ * Service for work with trains
  */
-public class TrainSevice {
+public class TrainService {
 
-    private static TrainSevice instance;
-    private DaoTrainInterface daoTrain = DaoFactory.getDaoTrainNeo();
-    private DaoStationInterface daoStation = DaoFactory.getDaoStation();
-    private DaoTrainTicketsOnDateInterface daoTicketsOnTrain = DaoFactory.getDaoTrainTicketsOnDate();
-    private static final Logger log = LogManager.getLogger(TrainSevice.class.getName());
+    private static TrainService instance;
+    private final DaoTrainInterface daoTrain = DaoFactory.getDaoTrainNeo();
+    private final DaoStationInterface daoStation = DaoFactory.getDaoStation();
+    private final DaoTrainTicketsOnDateInterface daoTicketsOnTrain = DaoFactory.getDaoTrainTicketsOnDate();
 
-    private TrainSevice(){}
+    private TrainService(){}
 
-    public static TrainSevice getInstance() {
+    public static TrainService getInstance() {
         if (instance == null) {
-            instance = new TrainSevice();
+            instance = new TrainService();
         }
         return instance;
     }

@@ -5,7 +5,7 @@ import epam.railway.entities.TrainTicketsOnDate;
 import java.sql.Timestamp;
 
 /**
- * Created by denis on 29.12.16.
+ * Provides methods for working with train's tickets on date
  */
 public interface DaoTrainTicketsOnDateInterface {
 

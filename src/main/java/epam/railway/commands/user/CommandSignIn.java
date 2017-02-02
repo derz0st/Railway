@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by denis on 27.01.17.
+ * Command for redirect in login page
  */
 public class CommandSignIn implements ICommand {
 

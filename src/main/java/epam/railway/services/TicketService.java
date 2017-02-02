@@ -27,8 +27,8 @@ import java.util.List;
  */
 public class TicketService {
 
-    private DaoTicketInterface daoTicket = DaoFactory.getDaoTicket();
-    private DaoTrainTicketsOnDateInterface daoTrainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate();
+    private final DaoTicketInterface daoTicket = DaoFactory.getDaoTicket();
+    private final DaoTrainTicketsOnDateInterface daoTrainTicketsOnDate = DaoFactory.getDaoTrainTicketsOnDate();
     private static TicketService instance;
     private static final Logger log = LogManager.getLogger(TicketService.class.getName());
 
@@ -106,7 +106,9 @@ public class TicketService {
         } catch (NamingException | HeuristicRollbackException | NotSupportedException | SystemException | HeuristicMixedException | RollbackException e) {
             log.error("Refund transaction error: " + e.getMessage() + ". ticket id: " + ticket.getId());
             try {
-                userTransaction.rollback();
+                if (userTransaction != null) {
+                    userTransaction.rollback();
+                }
             } catch (SystemException ex) {
                 log.error("Rollback error: " + ex.getMessage());
             }

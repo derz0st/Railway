@@ -30,7 +30,6 @@ public class CommandMissing implements ICommand{
 
         log.error("404. Command: " + request.getParameter(COMMAND));
         request.setAttribute(ERROR, Message.getInstance().getProperty(Message.UNEXIST_PAGE));
-        String page = Config.getInstance().getProperty(Config.ERROR);
-        return page;
+        return Config.getInstance().getProperty(Config.ERROR);
     }
 }

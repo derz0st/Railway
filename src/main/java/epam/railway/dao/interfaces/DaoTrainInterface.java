@@ -10,8 +10,7 @@ import epam.railway.entities.Train;
 import java.util.List;
 
 /**
- *
- * @author denis
+ * Provides methods for working with trains
  */
 public interface DaoTrainInterface {
 

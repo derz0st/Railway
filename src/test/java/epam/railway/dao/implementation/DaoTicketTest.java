@@ -20,12 +20,10 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
- * Created by denis on 01.02.17.
+ * Unit test class for DaoTicket
  */
 @PowerMockIgnore("javax.management.*")
 @RunWith(PowerMockRunner.class)
@@ -35,7 +33,6 @@ public class DaoTicketTest {
     private static final Integer TRAIN_NUMBER = 6;
     private static final Timestamp DATE = new Timestamp(1000);
     private static final Timestamp END_DATE = new Timestamp(2000);
-    private static final Integer TOTAL_SEATS = 10;
     private Connection mockConnection;
     private PreparedStatement mockPreparedStmnt;
     private ResultSet mockResultSet;
@@ -202,7 +199,7 @@ public class DaoTicketTest {
         //verify and assert
         verify(mockConnection, times(1)).prepareStatement(anyString());
         verify(mockPreparedStmnt, times(2)).setInt(anyInt(), anyInt());
-        verify(mockPreparedStmnt, times(1)).execute();;
+        verify(mockPreparedStmnt, times(1)).execute();
     }
 
 }

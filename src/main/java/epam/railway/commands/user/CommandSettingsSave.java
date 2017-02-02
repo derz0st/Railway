@@ -23,7 +23,6 @@ import java.io.IOException;
 public class CommandSettingsSave implements ICommand {
 
     private static final String USER = "user";
-    private static final String USER_ID = "userid";
     private static final String USER_EMAIL = "email";
     private static final String PASSWORD = "password";
     private static final String FIRST_NAME = "firstname";
@@ -34,7 +33,7 @@ public class CommandSettingsSave implements ICommand {
             FIRST_NAME_ERROR = "first_name_error",
             LAST_NAME_ERROR = "last_name_error",
             REQUIRED_FIELD = "• required field",
-            INCORRECT_EMAIL = "• incorrect e-mail";;
+            INCORRECT_EMAIL = "• incorrect e-mail";
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

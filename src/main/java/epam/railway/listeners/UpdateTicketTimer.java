@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.TimerTask;
 
 /**
- * Created by denis on 02.01.17.
+ * Timer for train tickets updating
  */
-public class UpdateTicketTimer extends TimerTask {
+class UpdateTicketTimer extends TimerTask {
     public void run() {
 
         Calendar today = Calendar.getInstance();

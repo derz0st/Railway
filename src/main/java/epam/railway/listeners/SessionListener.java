@@ -10,7 +10,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 /**
- * Created by denis on 02.01.17.
+ * Decrement amount of busy seats, when session closed
+ * if there was ticket in shopping cart
  */
 public class SessionListener implements HttpSessionListener {
 

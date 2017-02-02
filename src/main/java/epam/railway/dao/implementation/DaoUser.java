@@ -146,7 +146,7 @@ public class DaoUser implements DaoUserInterface {
 
     @Override
     public List<User> findAllNotAdmin() {
-        List<User> list = new ArrayList();
+        List<User> list = new ArrayList<>();
         
         try (Connection connection = ConnectionPool.createConnection(); 
             PreparedStatement preparedStatement = connection.prepareStatement(QUERY_FIND_NOT_ADMIN_USERS);

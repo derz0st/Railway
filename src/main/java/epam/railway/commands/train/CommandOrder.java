@@ -8,7 +8,7 @@ package epam.railway.commands.train;
 import epam.railway.commands.ICommand;
 import epam.railway.manager.Config;
 import epam.railway.manager.Message;
-import epam.railway.services.TrainSevice;
+import epam.railway.services.TrainService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +75,7 @@ public class CommandOrder implements ICommand {
 
                 if(travelDate.after(currentDay)) {
 
-                    List list = TrainSevice.getInstance().findByDeparturecityAndDestinationcity(departureCity, destinationCity, travelDate);
+                    List list = TrainService.getInstance().findByDeparturecityAndDestinationcity(departureCity, destinationCity, travelDate);
 
                     if (list.size() != 0) {
                         request.setAttribute(TRAINS, list);

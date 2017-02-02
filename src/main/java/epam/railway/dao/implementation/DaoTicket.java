@@ -114,7 +114,7 @@ public class DaoTicket implements DaoTicketInterface{
     @Override
     public List<Ticket> findByUserid(Integer userId, Boolean actual) {
 
-        List<Ticket> list = new ArrayList();
+        List<Ticket> list = new ArrayList<>();
         String query;
         if (actual == null) {
             query = QUERY_SELECT_ALL_TICKETS_BY_USER_ID;
@@ -163,7 +163,7 @@ public class DaoTicket implements DaoTicketInterface{
     @Override
     public List<Ticket> findByReturnStatus() {
 
-        List<Ticket> list = new ArrayList();
+        List<Ticket> list = new ArrayList<>();
         String query = QUERY_SELECT_ALL_TICKETS_BY_RETURN_STATUS;
 
         try (Connection connection = ConnectionPool.createConnection();

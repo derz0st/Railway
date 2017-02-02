@@ -10,8 +10,7 @@ import epam.railway.entities.User;
 import java.util.List;
 
 /**
- *
- * @author denis
+ * Provides methods for working with users
  */
 public interface DaoUserInterface {
 

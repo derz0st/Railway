@@ -113,10 +113,7 @@ public class User implements Serializable {
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
-        if (!Objects.equals(this.password, other.password)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.password, other.password);
     }
     
     

@@ -23,14 +23,13 @@ public class Config {
     public static final String USER_TICKETS = "USER_TICKETS";
     public static final String ADMINISTRATE = "ADMINISTRATE";
     public static final String SETTINGS = "SETTINGS";
-    public static final String SHOW_TRAIN_DETAIL = "SHOW_TRAIN_DETAIL";
     public static final String CUSTOMER_TICKETS = "customer_tickets";
     public static final String RETURN_TICKETS = "return_tickets";
     public static final String SIGN_UP = "sign_up";
 
     private Config(){}
     
-    public static Config getInstance() {
+    public synchronized static Config getInstance() {
         if (instance == null) {
             instance = new Config();
             instance.resource = ResourceBundle.getBundle(BUNDLE_NAME);

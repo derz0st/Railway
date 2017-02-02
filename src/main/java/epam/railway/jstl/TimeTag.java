@@ -8,7 +8,6 @@ package epam.railway.jstl;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.Calendar;
 
 /**
@@ -20,7 +19,7 @@ public class TimeTag extends TagSupport{
 	
     private Calendar calendar;
     
-    public void setDate(Timestamp calendar) {
+    public void setDate(Calendar calendar) {
         this.calendar = calendar;
     }
 
@@ -29,7 +28,6 @@ public class TimeTag extends TagSupport{
     public int doStartTag() throws JspException {
         try {
 
-            Integer days;
             String time;
             if (calendar.get(Calendar.DAY_OF_YEAR) == 365) {
                 time = calendar.get(Calendar.HOUR_OF_DAY) + "h" + calendar.get(Calendar.MINUTE) + "m";

@@ -102,10 +102,7 @@ public class Station {
         if (!Objects.equals(this.departureTime, other.departureTime)) {
             return false;
         }
-        if (!Objects.equals(this.priceToNext, other.priceToNext)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.priceToNext, other.priceToNext);
     }
 
     @Override

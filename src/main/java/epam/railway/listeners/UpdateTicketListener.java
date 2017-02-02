@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Timer;
 
 /**
- * Created by denis on 02.01.17.
+ * Adds new trains every midnight
  */
 public class UpdateTicketListener implements ServletContextListener {
 

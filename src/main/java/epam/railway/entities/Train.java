@@ -146,10 +146,7 @@ public class Train {
         if (!Objects.equals(this.price, other.price)) {
             return false;
         }
-        if (!Objects.equals(this.stations, other.stations)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.stations, other.stations);
     }
     
     
