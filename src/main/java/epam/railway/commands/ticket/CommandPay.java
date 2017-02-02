@@ -99,6 +99,7 @@ public class CommandPay implements ICommand {
                 request.setAttribute(USER, user);
                 request.setAttribute(TICKET, ticket);
                 request.setAttribute(STATUS, NEW);
+
                 TrainTicketsOnDate ticketsOnDate =
                         TicketsOnDateService.getInstance().find(trainNumber, new Timestamp(parsedDate.getTime()));
 

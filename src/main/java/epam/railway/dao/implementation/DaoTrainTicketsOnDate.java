@@ -85,7 +85,7 @@ public class DaoTrainTicketsOnDate implements DaoTrainTicketsOnDateInterface{
 
 
     @Override
-    public boolean incBusySeatsByTrainNumberAndDate(Integer trainNumber, Timestamp date){
+    public synchronized boolean incBusySeatsByTrainNumberAndDate(Integer trainNumber, Timestamp date){
 
         try (Connection connection = ConnectionPool.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INC_BUSY_SEATS)) {

@@ -16,16 +16,16 @@ public class Config {
     private static Config instance;
     private ResourceBundle resource;
     private static final String BUNDLE_NAME = "config";
-    public static final String ERROR = "ERROR";
-    public static final String LOGIN = "LOGIN";
-    public static final String ORDER = "ORDER";
-    public static final String PAY_TICKET = "PAY_TICKET";
-    public static final String USER_TICKETS = "USER_TICKETS";
-    public static final String ADMINISTRATE = "ADMINISTRATE";
-    public static final String SETTINGS = "SETTINGS";
-    public static final String CUSTOMER_TICKETS = "customer_tickets";
-    public static final String RETURN_TICKETS = "return_tickets";
-    public static final String SIGN_UP = "sign_up";
+    public static final String ERROR = "error",
+            LOGIN = "login",
+            ORDER = "order",
+            PAY_TICKET = "pay_ticket",
+            USER_TICKETS = "user_tickets",
+            ADMINISTRATE = "administrate",
+            SETTINGS = "settings",
+            CUSTOMER_TICKETS = "customer_tickets",
+            RETURN_TICKETS = "return_tickets",
+            SIGN_UP = "sign_up";
 
     private Config(){}
     
