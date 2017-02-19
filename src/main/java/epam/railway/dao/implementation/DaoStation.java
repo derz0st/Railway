@@ -24,6 +24,10 @@ public class DaoStation implements DaoStationInterface{
     private static DaoStation instance;
     private static final Logger commandLogger = LogManager.getLogger(DaoStation.class);
     private static final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss DD");
+    private static final String FIND_STATION_BY_NAME = "MATCH (st: Station {name: {1}}) return st.name";
+    private static final String ADD_NEW_STATION = "CREATE (st: Station {name: {1}})";
+    private static final String ADD_NEW_LINK_BETWEEN_STATIONS =
+            "MATCH (start: Station {name: {1}}), (end: Station {name: {2}}) CREATE (start)-[:GOES {trainnumber: {3}, departure: {4}, arrival: {5}, price: {6}, order: {7}}]->(end)";
     private static final String FIND_STATIONS_BY_TRAIN_ID = "match (n)-[rel: GOES {trainnumber: {1}}]->(m)\n"
             + "return distinct n.name as name, m.name as arname, rel.order, rel.departure, \n"
             + "rel.trainnumber, rel.arrival, rel.price\n" +
@@ -80,4 +84,72 @@ public class DaoStation implements DaoStationInterface{
         }
         return stationList;
     }
+
+    @Override
+    public Station findByName(String name) {
+        Station station = null;
+        try (Neo4jConnection con = Neo4jConnectionPool.getInstance().getConnection()){
+
+            String query = FIND_STATION_BY_NAME;
+            try (PreparedStatement stmt = con.prepareStatement(query)){
+
+                stmt.setString(1, name);
+
+                try (ResultSet rs2 = stmt.executeQuery()) {
+
+                    if (rs2.next()){
+                        station = new Station();
+                        station.setName(rs2.getString("st.name"));
+                    }
+
+                }
+            }
+        } catch (SQLException ex) {
+            commandLogger.error("Find stations error: " + ex.getMessage());
+        }
+        return station;
+    }
+
+    @Override
+    public void addNewStation(String name) {
+
+        try (Neo4jConnection con = Neo4jConnectionPool.getInstance().getConnection()){
+
+            String query = ADD_NEW_STATION;
+
+            try (PreparedStatement stmt = con.prepareStatement(query)){
+                stmt.setString(1, name);
+                stmt.execute();
+            }
+
+        } catch (SQLException ex) {
+            commandLogger.error("Find stations error: " + ex.getMessage());
+        }
+
+    }
+
+    //@Override
+    public void addNewLinkBetweenStations(String departureStation, String destinationStation, Integer trainNumber,
+                                          String departureTime, String destinationTime, Double price, Integer order) {
+
+        try (Neo4jConnection con = Neo4jConnectionPool.getInstance().getConnection()){
+
+            String query = ADD_NEW_LINK_BETWEEN_STATIONS;
+
+            try (PreparedStatement stmt = con.prepareStatement(query)){
+                stmt.setString(1, departureStation);
+                stmt.setString(2, destinationStation);
+                stmt.setInt(3, trainNumber);
+                stmt.setString(4, departureTime);
+                stmt.setString(5, destinationTime);
+                stmt.setDouble(6, price);
+                stmt.setInt(7, order);
+                stmt.execute();
+            }
+
+        } catch (SQLException ex) {
+            commandLogger.error("Find stations error: " + ex.getMessage());
+        }
+    }
+
 }

@@ -20,15 +20,12 @@ import java.util.List;
 public class UserService {
 
     private final DaoUserInterface daoUser = DaoFactory.getDaoUser();
-    private static UserService instance;
+    private static UserService instance = new UserService();
     private static final Logger log = LogManager.getLogger(UserService.class.getName());
 
     private UserService(){}
 
     public static UserService getInstance() {
-        if (instance == null) {
-            instance = new UserService();
-        }
         return instance;
     }
 

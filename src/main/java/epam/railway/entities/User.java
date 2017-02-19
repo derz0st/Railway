@@ -115,7 +115,6 @@ public class User implements Serializable {
         }
         return Objects.equals(this.password, other.password);
     }
-    
-    
+
 
 }

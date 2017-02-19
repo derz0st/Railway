@@ -7,7 +7,7 @@ package epam.railway.servlet;
 
 import epam.railway.commands.*;
 import epam.railway.commands.ticket.*;
-import epam.railway.commands.train.CommandOrder;
+import epam.railway.commands.train.*;
 import epam.railway.commands.user.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +42,10 @@ public class ControllerHelper {
         commands.put("returnticket", new CommandReturnTicket());
         commands.put("ticketsonreturn", new CommandGetReturnTickets());
         commands.put("acceptreturn", new CommandAcceptReturn());
+        commands.put("newtrain", new CommandGetNewTrainPage());
+        commands.put("addnewcrossing", new CommandAddNewCrossing());
+        commands.put("newticketsontrain", new CommandGetNewTicketsOnDatePage());
+        commands.put("addnewticketsondate", new CommandAddNewTicketsOnDate());
     }
     
     

@@ -33,8 +33,11 @@
         
         <div class="container">
             <jsp:include page="headerpanel.jsp" />
-                
-
+            <center>
+                ${info}<br> <br>
+                <a href="Controller?command=newtrain"> Добавить поезд </a> <br>
+                <a href="Controller?command=newticketsontrain"> Добавить билеты на поезд </a>
+            </center>
                 <c:forEach var="user" items="${users}">
                 <a href="Controller?command=customertickets&userid=${user.id}">
                 <div class="usualuser">

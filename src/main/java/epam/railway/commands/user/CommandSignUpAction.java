@@ -39,7 +39,8 @@ public class CommandSignUpAction implements ICommand {
             ENTERED_FIRSTNAME = "entered_firstname",
             ENTERED_LASTNAME = "entered_lastname",
             ENTERED_REPEAT_PASSWORD = "entered_repeat_password",
-            PASSWORDS_NOT_EQUALS = "• passwords not equals";
+            PASSWORDS_NOT_EQUALS = "• passwords not equals",
+            INCORRECT_INPUT_STRING = "• incorrect input";
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
@@ -50,15 +51,36 @@ public class CommandSignUpAction implements ICommand {
         String email = request.getParameter(EMAIL);     
         String password = request.getParameter(PASSWORD);
         String repeatpassword = request.getParameter(REPEAT_PASSWORD);
+
+        boolean correctPassword = RegExp.validateNoSpecSymbols(password);
+        boolean correctRepeatP = RegExp.validateNoSpecSymbols(repeatpassword);
+        boolean correctFirstN = RegExp.validateOnlyLetters(firstname);
+        boolean correctLastN = RegExp.validateOnlyLetters(lastname);
+
+        request.setAttribute(ENTERED_FIRSTNAME, firstname);
+
         request.setAttribute(ENTERED_EMAIL, email);
         request.setAttribute(ENTERED_PASSWORD, password);
-        request.setAttribute(ENTERED_FIRSTNAME, firstname);
+
         request.setAttribute(ENTERED_LASTNAME, lastname);
         request.setAttribute(ENTERED_REPEAT_PASSWORD, repeatpassword);
-
         page = Config.getInstance().getProperty(Config.SIGN_UP);
 
-        if (email.isEmpty() || password.isEmpty() || firstname.isEmpty() || lastname.isEmpty() || repeatpassword.isEmpty()){
+        if (!correctPassword || !correctRepeatP || !correctFirstN || !correctLastN) {
+
+            System.out.println("Зашли в проверку:");
+            System.out.println("correctPassword: " + correctPassword);
+            System.out.println("correctRepeatPassword: " + correctRepeatP);
+            System.out.println("correctFirstN: " + correctFirstN);
+            System.out.println("correctLastN: " + correctLastN);
+
+            if (!correctPassword) request.setAttribute(PASSWORD_ERROR, INCORRECT_INPUT_STRING);
+            if (!correctRepeatP) request.setAttribute(REPEAT_PASSWORS_ERROR, INCORRECT_INPUT_STRING);
+            if (!correctFirstN) request.setAttribute(FIRSTNAME_ERROR, INCORRECT_INPUT_STRING);
+            if (!correctLastN) request.setAttribute(LASTNAME_ERROR, INCORRECT_INPUT_STRING);
+
+
+        } else if (email.isEmpty() || password.isEmpty() || firstname.isEmpty() || lastname.isEmpty() || repeatpassword.isEmpty()){
             if(email.isEmpty()) {
                 request.setAttribute(EMAIL_ERROR, REQUIRED_FIELD);
             }

@@ -90,7 +90,7 @@
             <div class="mainitem">
                 <div class="customerblock">
                     <div class="topname"> <fmt:message key="customer" /> </div>
-                        ${ticket.userName} ${ticket.userLastName}
+                       <c:out value="${ticket.userName}"> </c:out> ${ticket.userLastName}
                 </div>
 
                 <div class="customerblock" id="startdate">

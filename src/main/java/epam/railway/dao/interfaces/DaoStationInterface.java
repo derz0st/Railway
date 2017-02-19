@@ -16,4 +16,11 @@ public interface DaoStationInterface {
      */
     List<Station> findByTrainNumber(Integer trainNumber);
 
+    Station findByName(String name);
+
+    void addNewStation(String name);
+
+    void addNewLinkBetweenStations(String departureStation, String destinationStation, Integer trainNumber,
+                                          String departureTime, String destinationTime, Double price, Integer order);
+
 }

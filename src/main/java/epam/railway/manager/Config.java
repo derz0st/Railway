@@ -25,7 +25,9 @@ public class Config {
             SETTINGS = "settings",
             CUSTOMER_TICKETS = "customer_tickets",
             RETURN_TICKETS = "return_tickets",
-            SIGN_UP = "sign_up";
+            SIGN_UP = "sign_up",
+            ADD_NEW_TRAIN = "add_new_train",
+            ADD_TICKETS_ON_DATE = "add_tickets_on_date";
 
     private Config(){}
     

@@ -9,8 +9,11 @@ import epam.railway.entities.Train;
 import epam.railway.entities.TrainTicketsOnDate;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +26,10 @@ public class TrainService {
     private final DaoStationInterface daoStation = DaoFactory.getDaoStation();
     private final DaoTrainTicketsOnDateInterface daoTicketsOnTrain = DaoFactory.getDaoTrainTicketsOnDate();
 
+    private static final String
+            CURRENT_DAY = ":00 00",
+            NEXT_DAY = ":00 01";
+
     private TrainService(){}
 
     public static TrainService getInstance() {
@@ -30,6 +37,37 @@ public class TrainService {
             instance = new TrainService();
         }
         return instance;
+    }
+
+    public void createLinkBetweenStations(String departureCity, String destinationCity, String departureTimeString,
+        String arrivalTimeString, Integer trainNumber, Double price, Integer moveNumber) throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+        Date startDate = dateFormat.parse(departureTimeString);
+        Date finishDate = dateFormat.parse(arrivalTimeString);
+
+
+        Station depStation = DaoFactory.getDaoStation().findByName(departureCity);
+        Station destStation = DaoFactory.getDaoStation().findByName(destinationCity);
+
+        if (depStation == null){
+            DaoFactory.getDaoStation().addNewStation(departureCity);
+        } if (destStation == null){
+            DaoFactory.getDaoStation().addNewStation(destinationCity);
+        }
+
+        departureTimeString = departureTimeString + CURRENT_DAY;
+
+        if (startDate.after(finishDate)) {
+            arrivalTimeString = arrivalTimeString + NEXT_DAY;
+        } else {
+            arrivalTimeString = arrivalTimeString + CURRENT_DAY;
+        }
+
+        DaoFactory.getDaoStation().addNewLinkBetweenStations(departureCity, destinationCity,
+                trainNumber, departureTimeString, arrivalTimeString, price, moveNumber);
+
     }
 
 
@@ -59,7 +97,7 @@ public class TrainService {
                 train.setStations(stationList);
 
 
-                for(int i = 0; i < stationList.size(); i++){
+                for (int i = 0; i < stationList.size(); i++) {
                     if(stationList.get(i).getName().equals(departureCity)){
                         departureSt = i;
                     } else if(stationList.get(i).getName().equals(destinationCity)){
